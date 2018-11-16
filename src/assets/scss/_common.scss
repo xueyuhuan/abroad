@@ -13,7 +13,7 @@ $form-line-full-width:900px;
   .select{width: $form-line-base-width;}
   .submit{display:block;text-align: center}//提交按钮行
 }
-//搜索card頁面
+//单独搜索card
 .card-search{
   margin: 20px auto;
 }
@@ -26,6 +26,18 @@ $form-line-full-width:900px;
     .el-col{text-align: center}
     .el-input{width: 100%}
   }
+}
+//card头部搜索
+.header-search{
+  .el-card__header{
+    padding: 30px 20px 10px;
+  }
+  .el-button-group{
+    margin-bottom: 10px;
+  }
+}
+.pagination{
+  margin-top: 10px;
 }
 fieldset{
   width: 300px;
