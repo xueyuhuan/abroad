@@ -58,16 +58,36 @@
             <header slot="title">{{dialogName}}</header>
             <el-form :model="dialogForm" :rules="rules" ref="dialogForm" label-width="100px">
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="dialogForm.username" placeholder="请输入" clearable></el-input>
+                    <el-input :disabled="dialogName==='编辑'" v-model="dialogForm.truename" placeholder="请输入" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" prop="truename">
                     <el-input v-model="dialogForm.truename" placeholder="请输入" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="用户类型" prop="usertype">
-                    <el-select v-model="dialogForm.usertype" placeholder="请选择" clearable>
+                    <el-select v-model="dialogForm.usertype" placeholder="请选择">
                         <el-option label="教职工" value="2"></el-option>
                         <el-option label="学生" value="4"></el-option>
                     </el-select>
+                </el-form-item>
+                <el-form-item label="性别" prop="sex">
+                    <el-select v-model="dialogForm.sex" placeholder="请选择">
+                        <el-option label="男" value="男"></el-option>
+                        <el-option label="女" value="女"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="部门">
+                    <el-select v-model="formSearch.deptid" placeholder="请选择" clearable>
+                        <el-option v-for="i in deptList" :key="i.id" :label="i.name" :value="i.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="电话" prop="mobile">
+                    <el-input v-model="dialogForm.mobile" placeholder="请输入" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="dialogForm.email" placeholder="请输入" clearable></el-input>
+                </el-form-item>
+                <el-form-item label="地址" prop="address">
+                    <el-input v-model="dialogForm.address" placeholder="请输入" clearable></el-input>
                 </el-form-item>
             </el-form>
             <footer slot="footer">
@@ -80,7 +100,7 @@
 
 <script>
   export default {
-    name: "project",
+    name: "user",
     data() {
       return {
         //搜索
@@ -105,7 +125,11 @@
           username:'',
           truename:'',
           usertype:'',
+          sex:'',
           deptid:'',
+          mobile:'',
+          email:'',
+          address:'',
         },
         rules:{
           username:[{required: true, message: '用户名不能为空', trigger: 'blur'}],
