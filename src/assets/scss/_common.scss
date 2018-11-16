@@ -1,0 +1,54 @@
+/*
+*全局公用样式*
+*/
+$form-line-base-width:350px;
+$form-line-base-width-search:200px;
+$form-line-full-width:900px;
+//行内主表单样式
+.form-inline{
+  .block{display: block;}//块级
+  .el-select{width: $form-line-base-width}//选择器
+  .el-cascader{width: $form-line-base-width}//级联选择器
+  .el-textarea{width: $form-line-full-width}//多行文本输入框
+  .select{width: $form-line-base-width;}
+  .submit{display:block;text-align: center}//提交按钮行
+}
+//搜索card頁面
+.card-search{
+  margin: 20px auto;
+}
+//搜索表单样式
+.form-inline-search{
+  .el-input,.el-select,.el-cascader,.el-form-item__content{
+    width: $form-line-base-width-search;
+  }
+  .el-row{
+    .el-col{text-align: center}
+    .el-input{width: 100%}
+  }
+}
+fieldset{
+  width: 300px;
+  margin: 20px auto 10px;
+  text-align: center;
+  border: none;
+  border-top:1px #e6e6e6 solid;
+  legend{
+    margin-left: 20px;
+    padding: 0 10px;
+    font-size: 20px;
+    font-weight: 300;
+  }
+}
+footer{
+  color: #888;
+  text-align: center;
+  padding: 20px 0;
+}
+.width40{
+  width: 40%;
+}
+.width80{
+  width: 80%;
+}
+
