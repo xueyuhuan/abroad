@@ -6,6 +6,7 @@
               :default-active="$route.path"
               mode="horizontal">
         <el-menu-item index="/bs/user"><router-link to="/bs/user">用户管理</router-link></el-menu-item>
+        <el-menu-item index="/bs/role"><router-link to="/bs/role">角色管理</router-link></el-menu-item>
         <el-submenu index="7">
           <template slot="title">用户名</template>
           <el-menu-item index="7-1" @click="logout">注销</el-menu-item>

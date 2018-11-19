@@ -11,5 +11,17 @@ export default new Router({
       component: () => import("./views/backstage/user.vue"),
       meta:{requireAuth:true}
     },
+    {
+      path: "/bs/role",
+      name: "role",
+      component: () => import("./views/backstage/role.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/",
+      name: "project",
+      component: () => import("./views/project.vue"),
+      meta:{requireAuth:true}
+    },
   ]
 })

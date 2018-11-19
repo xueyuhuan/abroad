@@ -32,8 +32,11 @@ $form-line-full-width:900px;
   .el-card__header{
     padding: 30px 20px 10px;
   }
-  .el-button-group{
+  .btn-group{
     margin-bottom: 10px;
+    .el-button-group{
+      margin-right: 10px;
+    }
   }
 }
 .pagination{

@@ -19,7 +19,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="部门">
-                        <el-select v-model="formSearch.deptid" placeholder="请选择" clearable>
+                        <el-select v-model="formSearch.deptId" placeholder="请选择" clearable>
                             <el-option v-for="i in deptList" :key="i.id" :label="i.name" :value="i.id"></el-option>
                         </el-select>
                     </el-form-item>
@@ -28,11 +28,16 @@
                     </el-form-item>
                 </el-form>
             </header>
-            <el-button-group>
-                <el-button size="medium" type="primary" @click="add">新增</el-button>
-                <el-button size="medium" type="primary" @click="del">删除</el-button>
-                <el-button size="medium" type="primary" @click="edit">修改</el-button>
-            </el-button-group>
+            <div class="btn-group">
+                <el-button-group>
+                    <el-button size="medium" type="primary" @click="add">新增</el-button>
+                    <el-button size="medium" type="primary" @click="del">删除</el-button>
+                    <el-button size="medium" type="primary" @click="edit">修改</el-button>
+                </el-button-group>
+                <el-button-group>
+                    <el-button size="medium" type="primary" @click="grant">分配角色</el-button>
+                </el-button-group>
+            </div>
             <el-table :data="tableData" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="username" label="用户名" min-width="180"></el-table-column>
@@ -58,7 +63,7 @@
             <header slot="title">{{dialogName}}</header>
             <el-form :model="dialogForm" :rules="rules" ref="dialogForm" label-width="100px">
                 <el-form-item label="用户名" prop="username">
-                    <el-input :disabled="dialogName==='编辑'" v-model="dialogForm.truename" placeholder="请输入" clearable></el-input>
+                    <el-input :disabled="dialogName==='编辑'" v-model="dialogForm.username" placeholder="请输入" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" prop="truename">
                     <el-input v-model="dialogForm.truename" placeholder="请输入" clearable></el-input>
@@ -76,7 +81,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="部门">
-                    <el-select v-model="formSearch.deptid" placeholder="请选择" clearable>
+                    <el-select v-model="dialogForm.deptId" placeholder="请选择" clearable>
                         <el-option v-for="i in deptList" :key="i.id" :label="i.name" :value="i.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -95,6 +100,16 @@
                 <el-button type="primary" @click="submitForm('dialogForm')">确 定</el-button>
             </footer>
         </el-dialog>
+        <el-dialog :visible.sync="dialogVisibleRole">
+            <header slot="title">分配角色</header>
+            <el-checkbox-group v-model="roleIds">
+                <el-checkbox v-for="i in roleList" :key="i.id" :label="i.id">{{i.name}}</el-checkbox>
+            </el-checkbox-group>
+            <footer slot="footer">
+                <el-button @click="dialogVisibleRole = false">取 消</el-button>
+                <el-button type="primary" @click="submitRole">确 定</el-button>
+            </footer>
+        </el-dialog>
     </div>
 </template>
 
@@ -108,7 +123,7 @@
           username:'',
           truename:'',
           usertype:'',
-          deptid:'',
+          deptId:'',
           //分页
           page:1,//当前
           limit:10,
@@ -118,7 +133,7 @@
         //表格
         tableData: [],
         multipleSelection: [],//多选
-        //弹框
+        //弹框增改
         dialogVisible:false,//弹框是否显示
         dialogName:'',//弹框名
         dialogForm:{
@@ -126,7 +141,7 @@
           truename:'',
           usertype:'',
           sex:'',
-          deptid:'',
+          deptId:'',
           mobile:'',
           email:'',
           address:'',
@@ -135,8 +150,12 @@
           username:[{required: true, message: '用户名不能为空', trigger: 'blur'}],
           truename:[{required: true, message: '姓名不能为空', trigger: 'blur'}],
           usertype:[{required: true, message: '请选择用户类型', trigger: 'change'}],
-          deptid:[{required: true, message: '请选择部门', trigger: 'change'}],
-        }
+          deptId:[{required: true, message: '请选择部门', trigger: 'change'}],
+        },
+        //弹框角色
+        dialogVisibleRole:false,
+        roleList:[],
+        roleIds:[],
       }
     },
     computed: {
@@ -149,6 +168,11 @@
       this.$ajax.post('/dept/list')
         .then(res=>{
           this.deptList=res.data.data.data;
+        });
+      //角色列表
+      this.$ajax.post('/role/list')
+        .then(res=>{
+          this.roleList=res.data.data.data;
         });
       this.getTableData();
     },
@@ -221,12 +245,35 @@
             })
         }
       },
+      //分配角色
+      grant(){
+        if(this.multipleSelection.length===0){
+          this.$message.warning('请选择数据');
+        }
+        else{
+          this.dialogVisibleRole=true;
+        }
+      },
+      submitRole(){
+        let userIds=[];
+        for(let i in this.multipleSelection){
+          userIds.push(this.multipleSelection[i].id);
+        }
+        this.$ajax.post('/user/batchGrant ',{userIds:userIds,roleIds:this.roleIds})
+          .then(res=>{
+            this.handleCurrentChange(1);
+            this.dialogVisibleRole=false;
+            this.$message.success(res.data.errmsg)
+          })
+      },
       //分页
+      //每页条数改变
       handleSizeChange(val) {
         this.formSearch.limit=val;
         this.formSearch.page=1;
         this.getTableData();
       },
+      //当前页改变
       handleCurrentChange(val) {
         this.formSearch.page=val;
         this.getTableData();
