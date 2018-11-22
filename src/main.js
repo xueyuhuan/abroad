@@ -33,6 +33,7 @@ requireComponent.keys().forEach(fileName => {
 })
 
 Vue.prototype.$ajax=axios;
+Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
@@ -42,7 +43,8 @@ router.beforeEach((to,from,next)=>{
       axios.post('/gettoken',{uuid:res.data.data.APP_UUID})
         .then(res=>{
           store.commit('setToken',res.data.data.token);
-          store.commit('setRole',res.data.data.roles);
+          store.commit('setRole',res.data.data.currentRole.id);
+          store.commit('setRoleList',res.data.data.roles);
           // console.log(res);
           next()
         })

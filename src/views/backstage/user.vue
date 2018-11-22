@@ -204,7 +204,7 @@
           this.$message.warning('只能选择一项编辑');
         }
         else{
-          this.dialogForm=this.multipleSelection[0];
+          this.dialogForm={...this.multipleSelection[0]};
           this.dialogVisible=true;
           this.dialogName='编辑';
         }

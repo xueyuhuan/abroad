@@ -6,11 +6,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token:'',
-    role:''//用户角色
+    role:'',//当前用户角色
+    roleList:'',//用户所有角色表
   },
   getters:{
     token:state=>{return state.token},
     role:state=>{return state.role},
+    roleList:state=>{return state.roleList},
   },
   mutations: {
     //设置数据
@@ -25,7 +27,11 @@ export default new Vuex.Store({
     },
     setRole(state,role){
       state.role=role;
-      sessionStorage['role']=JSON.stringify(role);
+      sessionStorage['role']=role;
+    },
+    setRoleList(state,roleList){
+      state.roleList=roleList;
+      sessionStorage['roleList']=JSON.stringify(roleList);
     }
   },
   actions: {}

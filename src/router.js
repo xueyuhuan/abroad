@@ -5,6 +5,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    //后台
     {
       path: "/bs/user",
       name: "user",
@@ -18,9 +19,22 @@ export default new Router({
       meta:{requireAuth:true}
     },
     {
-      path: "/",
-      name: "project",
-      component: () => import("./views/project.vue"),
+      path: "/bs/set",
+      name: "set",
+      component: () => import("./views/backstage/set.vue"),
+      meta:{requireAuth:true}
+    },
+    //项目
+    {
+      path: "/project/apply",
+      name: "专项项目申请",
+      component: () => import("./views/project/apply/special.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/list/examine",
+      name: "专项项目审批",
+      component: () => import("./views/project/list/examine.vue"),
       meta:{requireAuth:true}
     },
   ]
