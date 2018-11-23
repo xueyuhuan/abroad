@@ -55,5 +55,11 @@ export default new Router({
       component: () => import("./views/project/list/student.vue"),
       meta:{requireAuth:true}
     },
+    {
+      path: "/project/apply",
+      name: "学生申请表",
+      component: () => import("./views/project/apply/apply.vue"),
+      meta:{requireAuth:true}
+    },
   ]
 })

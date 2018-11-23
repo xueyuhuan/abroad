@@ -503,7 +503,7 @@
           name:'applyProject',
           data:{...this.row}
         });
-        // this.$router.push('/project/apply');
+        this.$router.push('/project/apply');
       },
       //日期格式函数
       dateFormat(fmt,date) {
