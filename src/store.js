@@ -8,6 +8,7 @@ export default new Vuex.Store({
     token:'',
     role:'',//当前用户角色
     roleList:'',//用户所有角色表
+    applyProject:'',//当前申请项目
   },
   getters:{
     token:state=>{return state.token},

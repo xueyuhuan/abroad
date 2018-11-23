@@ -4,7 +4,7 @@
             <!--<legend>专项项目审批</legend>-->
         <!--</fieldset>-->
         <el-card shadow="hover" class="card-search">
-            <header slot="header">专项项目管理</header>
+            <header slot="header">费专项项目管理</header>
             <el-form inline :model="formSearch" size="mini" class="form-inline-search">
                 <el-form-item label="项目名称">
                     <el-input v-model="formSearch.name" placeholder="项目名称" clearable></el-input>
@@ -52,37 +52,43 @@
         </el-card>
         <el-card shadow="hover">
             <el-tabs v-model="formSearch.status" @tab-click="handleClick">
-                <el-tab-pane label="全部" name="all">
+                <el-tab-pane label="待登记" name="1">
                     <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
                         <el-table-column prop="xmmc" label="项目名称" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="lxdwmc" label="立项单位" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="jflyname" label="经费来源" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center">
+                            <template slot-scope="scope">
+                                {{scope.row.xmlbname}}/{{scope.row.xmlbxname}}
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="time" label="项目起止时间" show-overflow-tooltip align="center">
                             <template slot-scope="scope">
                                 {{scope.row.xmkssj}}至{{scope.row.xmzzsj}}
                             </template>
                         </el-table-column>
-                        <el-table-column prop="xmts" label="天数" width="50" show-overflow-tooltip align="center"></el-table-column>
+
                         <el-table-column prop="xmfzr" label="项目负责人" width="80" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="xmfzrdh" label="联系电话" width="80" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="mexz" label="名额" width="50" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column label="状态" width="80" align="center">
+                        <el-table-column prop="xxjl" label="学校奖励" width="50" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column label="操作" width="80" align="center">
                             <template slot-scope="scope">
-                                <el-tag v-if="scope.row.status==='1'" size="medium">待审核</el-tag>
-                                <el-tag v-else-if="scope.row.status==='2'" size="medium" type="warning">已通过</el-tag>
-                                <el-tag v-else-if="scope.row.status==='8'" size="medium" type="success">已发布</el-tag>
-                                <el-tag v-else size="medium" type="info">未通过</el-tag>
+                                <el-button @click="handleReg(scope.row)" type="primary" size="mini" plain>登记</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="待审批" name="1">
+                <el-tab-pane label="已登记" name="8">
                     <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
                         <el-table-column prop="xmmc" label="项目名称" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="lxdwmc" label="立项单位" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="jflyname" label="经费来源" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center">
+                            <template slot-scope="scope">
+                                {{scope.row.xmlbname}}/{{scope.row.xmlbxname}}
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="time" label="项目起止时间" show-overflow-tooltip align="center">
                             <template slot-scope="scope">
                                 {{scope.row.xmkssj}}至{{scope.row.xmzzsj}}
@@ -92,79 +98,7 @@
                         <el-table-column prop="xmfzrdh" label="联系电话" width="80" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="mexz" label="名额" width="50" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="xxjl" label="学校奖励" width="60" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column label="操作" width="80" align="center">
-                            <template slot-scope="scope">
-                                <el-button @click="handleApprove(scope.row)" type="primary" size="mini" plain>审批</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="已通过" name="2">
-                    <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
-                        <el-table-column prop="xmmc" label="项目名称" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="lxdwmc" label="立项单位" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="jflyname" label="经费来源" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="time" label="项目起止时间" show-overflow-tooltip align="center">
-                            <template slot-scope="scope">
-                                {{scope.row.xmkssj}}至{{scope.row.xmzzsj}}
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="xmfzr" label="项目负责人" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmfzrdh" label="联系电话" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="mexz" label="名额" width="50" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xxjl" label="学校奖励" width="60" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="shsj" label="审核时间" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column label="操作" width="150" align="center">
-                            <template slot-scope="scope">
-                                <el-button @click="handleEdit(scope.row)" type="primary" size="mini" plain>编辑</el-button>
-                                <el-button @click="handleRelease(scope.row)" type="success" size="mini" plain>发布</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="已发布" name="8">
-                    <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
-                        <el-table-column prop="xmmc" label="项目名称" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="lxdwmc" label="立项单位" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="jflyname" label="经费来源" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="time" label="项目起止时间" show-overflow-tooltip align="center">
-                            <template slot-scope="scope">
-                                {{scope.row.xmkssj}}至{{scope.row.xmzzsj}}
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="xmfzr" label="项目负责人" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmfzrdh" label="联系电话" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="mexz" label="名额" width="50" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xxjl" label="学校奖励" width="60" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="shsj" label="申请截止时间" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column label="操作" width="80" align="center">
-                            <template slot-scope="scope">
-                                <el-button @click="handleEdit(scope.row)" type="primary" size="mini" plain>编辑</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-tab-pane>
-                <el-tab-pane label="未通过" name="9">
-                    <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
-                        <el-table-column prop="xmmc" label="项目名称" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="lxdwmc" label="立项单位" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="jflyname" label="经费来源" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmlbxname" label="项目类别" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="time" label="项目起止时间" show-overflow-tooltip align="center">
-                            <template slot-scope="scope">
-                                {{scope.row.xmkssj}}至{{scope.row.xmzzsj}}
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="xmfzr" label="项目负责人" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="xmfzrdh" label="联系电话" width="80" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="mexz" label="名额" width="50" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column label="操作" width="80" align="center">
-                            <template slot-scope="scope">
-                                <el-button @click="handleDel(scope.row)" type="danger" size="mini" plain>删除</el-button>
-                            </template>
-                        </el-table-column>
+                        <el-table-column prop="shsj" label="登记时间" width="80" show-overflow-tooltip align="center"></el-table-column>
                     </el-table>
                 </el-tab-pane>
             </el-tabs>
@@ -180,16 +114,15 @@
         </el-card>
         <el-dialog :visible.sync="dialogVisible" width="80%">
             <header slot="title">{{dialogName}}</header>
-            <project-form :row="row" :disable="disable" :name="dialogName"
-                    @submit-approve="sonApprove"
-                    @submit-release="sonRelease" @submit-edit="sonEdit" @dialog-close='dialogClose'>
+            <project-form :row="row" :disable="disable" :name="dialogName" :sfzx="formSearch.sfzx"
+                          @submit-reg="sonReg">
             </project-form>
         </el-dialog>
     </div>
 </template>
 
 <script>
-  import projectForm from '../apply/form'
+  import projectForm from '../add/form'
   export default {
     name: "project",
     components:{
@@ -207,6 +140,7 @@
         },
         formSearch: {
           roleId:'',
+          sfzx:'102',
           name:'',
           lxdwId:'',
           xmlbList:[],
@@ -217,7 +151,7 @@
           xmjssj:'',
           minDay:'',
           maxDay:'',
-          status:'all',
+          status:'1',
           //分页
           page:1,//当前
           limit:10,
@@ -248,12 +182,12 @@
             this.deptList=res.data.data.data;
           });
         //经费来源列表
-        this.$ajax.post('/code/findJfly')
+        this.$ajax.post('/code/findJfly',{id:this.formSearch.sfzx})
           .then(res=>{
             this.fundsList=res.data.data.data;
           });
         //项目类别列表
-        this.$ajax.post('/code/findCodeAndSonCode',{id:'101'})
+        this.$ajax.post('/code/findCodeAndSonCode',{id:this.formSearch.sfzx})
           .then(res=>{
             this.typeList=res.data.data.data;
           });
@@ -282,6 +216,18 @@
         this.getTableData();
       },
       //操作按钮
+      //登记
+      handleReg(row){
+        this.row={...row};
+        this.dialogVisible=true;
+        this.disable=true;
+        this.dialogName='登记';
+      },
+      sonReg(res){
+        this.handleCurrentChange(1);
+        this.dialogVisible=false;
+        this.$message.success(res.data.errmsg);
+      },
       //审批
       handleApprove(row){
         this.row={...row};

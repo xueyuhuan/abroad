@@ -4,7 +4,7 @@
             <el-form-item label="项目名称" class="block" prop="xmmc">
                 <el-input v-model="form.xmmc" class="name"></el-input>
             </el-form-item>
-            <el-form-item label="审批状态" class="block">
+            <el-form-item label="审批状态" class="block" v-if="row.sfzx==='101'&&role!=='SYS_STUDENT'">
                 <el-tag v-if="form.status==='1'" size="medium">待审核</el-tag>
                 <el-tag v-else-if="form.status==='2'" size="medium" type="warning">已通过</el-tag>
                 <el-tag v-else-if="form.status==='8'" size="medium" type="success">已发布</el-tag>
@@ -48,20 +48,20 @@
                             :value="item.id">
                     </el-option>
                 </el-select>
-                <el-input class="other" v-model="form.jflyqt" v-show="form.jfly==='101002007'" placeholder="输入其他专项具体内容"></el-input>
+                <el-input class="other" v-model="form.jflyqt" v-show="form.jfly==='101002007'||form.jfly==='102002004'" placeholder="输入其他专项具体内容"></el-input>
             </el-form-item>
             <el-form-item label="名额限制" class="block" prop="mexz">
                 <el-input-number v-model="form.mexz"></el-input-number>
             </el-form-item>
             <el-form-item label="项目类别" class="block" prop="xmlbList">
                 <el-cascader v-model="form.xmlblist" :options="typeList" :props="props"></el-cascader>
-                <el-input class="other" v-model="form.xmlbqt" v-show="form.xmlbx==='101001001004'||form.xmlbx==='101001002005'" placeholder="输入其他专项具体内容"></el-input>
+                <el-input class="other" v-model="form.xmlbqt" v-show="form.xmlbx==='101001001004'||form.xmlbx==='101001002005'||form.xmlbx==='102001001004'||form.xmlbx==='102001002005'" placeholder="输入其他专项具体内容"></el-input>
             </el-form-item>
             <el-form-item label="学生层次要求" class="block" prop="xsccyq">
                 <el-checkbox-group v-model="form.xsccyqlist" size="small">
-                    <el-checkbox label="本科" border></el-checkbox>
-                    <el-checkbox label="硕士" border></el-checkbox>
-                    <el-checkbox label="博士" border></el-checkbox>
+                    <el-checkbox label="本科生" border></el-checkbox>
+                    <el-checkbox label="硕士生" border></el-checkbox>
+                    <el-checkbox label="博士生" border></el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item label="国家（地区）" prop="jhgj">
@@ -87,7 +87,16 @@
                 </el-date-picker>
                 <el-input v-model="form.xmts" disabled placeholder="项目天数" style="width: 90px;text-align:center;margin-left: 20px"></el-input>
             </el-form-item>
-            <el-form-item label="经费组成" class="block">
+            <!--非专项专有申请起止时间-->
+            <template v-if="row.sfzx==='102'">
+                <el-form-item label="申请开始时间">
+                    <el-date-picker class="select" v-model="form.xssqkssj" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="申请结束时间">
+                    <el-date-picker class="select" v-model="form.xssqzzsj" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                </el-form-item>
+            </template>
+            <el-form-item label="经费组成" class="block" v-if="row.sfzx==='101'&&role!=='SYS_STUDENT'">
                 <el-input class="complex" placeholder="请输入金额" v-model.number="form.dwzz">
                     <template slot="prepend">单位资助</template>
                     <el-select v-model="form.dwzzlx" slot="append" placeholder="请选择">
@@ -107,6 +116,26 @@
                     </el-select>
                 </el-input>
             </el-form-item>
+            <el-form-item label="经费组成" class="block" v-if="row.sfzx==='102'&&role!=='SYS_STUDENT'">
+                <el-input class="complex" placeholder="金额" v-model.number="form.xndwzz">
+                    <template slot="prepend">校内单位资助</template>
+                    <el-select v-model="form.xndwzzlx" slot="append" placeholder="请选择">
+                        <el-option label="元" value="1"></el-option>
+                        <el-option label="元/人" value="2"></el-option>
+                    </el-select>
+                </el-input>
+                <el-input class="complex" placeholder="请输入金额" v-model.number="form.xszc">
+                    <template slot="prepend">学生自筹</template>
+                    <template slot="append">元/人</template>
+                </el-input>
+                <el-input class="complex" placeholder="金额" v-model.number="form.xwdwzz">
+                    <template slot="prepend">校外单位资助</template>
+                    <el-select v-model="form.xwdwzzlx" slot="append" placeholder="请选择">
+                        <el-option label="元" value="1"></el-option>
+                        <el-option label="元/人" value="2"></el-option>
+                    </el-select>
+                </el-input>
+            </el-form-item>
             <el-form-item label="立项理由" class="block">
                 <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.xmlxly" placeholder="请填写项目立项理由及主要内容（2000字以内）"></el-input>
             </el-form-item>
@@ -119,7 +148,7 @@
             <el-form-item label="其他说明" class="block">
                 <el-input type="textarea" :autosize="{ minRows: 4}" v-model="form.xmqtsm" placeholder="可填写项目的其他说明（1000字以内）"></el-input>
             </el-form-item>
-            <el-form-item label="经费预算明细" class="block">
+            <el-form-item label="经费预算明细" class="block" v-if="row.sfzx==='101'&&role!=='SYS_STUDENT'">
                 <el-table :data="form.xmjfysmxlist" border empty-text="暂无明细" class="detailTable">
                     <el-table-column type="index" width="50">
                     </el-table-column>
@@ -192,6 +221,19 @@
                 <el-button type="primary" @click="submitRelease()">确认提交</el-button>
             </el-form-item>
         </el-form>
+        <el-form v-if="name==='登记'" inline size="medium" label-width="110px" class="form-inline dialog-form">
+            <el-form-item label="登记时间">
+                <el-date-picker v-model="reg.shsj" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+            </el-form-item>
+            <el-form-item label=" " class="block">
+                <el-button type="primary" @click="submitReg()">确认提交</el-button>
+            </el-form-item>
+        </el-form>
+        <el-form v-if="name==='申请'" inline size="medium" label-width="110px" class="form-inline dialog-form">
+            <el-form-item label=" " class="block">
+                <el-button type="primary" @click="applyProject()">申请该项目</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 
@@ -201,7 +243,8 @@
     props:{
       row:Object,//行数据
       disable:Boolean,//表单是否可填写
-      name:String,//
+      name:String,//弹窗操作名
+      sfzx:String,//102非专项
     },
     data() {
       return {
@@ -259,10 +302,11 @@
         //   xmxcap:'',//项目行程安排
         //   xszgyq:'',//学生申请本项目的资格要求
         //   xmjfys:0,//项目经费预算
-        //   xmjfysmx:[],//项目经费预算明细
+        //   xmjfysmx:'',//项目经费预算明细
         //   fj:'',//附件
         //   xmqtsm:'',//项目其他说明
         // },
+        //审批
         //审批
         approve:{
           id:'',
@@ -274,7 +318,12 @@
         release:{
           id:'',
           time:'',
-        }
+        },
+        //登记
+        reg:{
+          id:'',
+          shsj:'',
+        },
       };
     },
     computed: {
@@ -299,11 +348,13 @@
           this.form.xmts='';
           this.form.daterange=[];
         }
+      },
+      'form.xmlblist'(val){
+        this.form.xmlbx=val[1]
       }
     },
     created(){
       this.getList();
-
       this.form={...this.row}
       console.log(this.form)
       this.daterange=[new Date(this.row.xmkssj),new Date(this.row.xmzzsj)]
@@ -322,12 +373,12 @@
             this.deptList=res.data.data.data;
           });
         //经费来源列表
-        this.$ajax.post('/code/findJfly')
+        this.$ajax.post('/code/findJfly',{id:this.row.sfzx})
           .then(res=>{
             this.fundsList=res.data.data.data;
           });
         //项目类别列表
-        this.$ajax.post('/code/findCodeAndSonCode',{id:'101'})
+        this.$ajax.post('/code/findCodeAndSonCode',{id:this.row.sfzx})
           .then(res=>{
             this.typeList=res.data.data.data;
           });
@@ -400,6 +451,19 @@
             }
           })
       },
+      //提交登记
+      submitReg(){
+        this.reg.id=this.row.id;
+        this.$ajax.post('/project/release',this.reg)
+          .then(res=>{
+            if(res.data.errcode==='0'){
+              this.$emit('submit-reg',res)
+            }
+            else{
+              this.$message.error(res.data.errmsg);
+            }
+          })
+      },
       //提交编辑
       submitEdit(){
         this.form.xmlb=this.form.xmlblist[0];
@@ -433,6 +497,15 @@
             }
           })
       },
+      //申请项目
+      applyProject(){
+        this.$store.commit('setData',{
+          name:'applyProject',
+          data:{...this.row}
+        });
+        // this.$router.push('/project/apply');
+      },
+      //日期格式函数
       dateFormat(fmt,date) {
         let o = {
           "M+" : date.getMonth()+1,                 //月份

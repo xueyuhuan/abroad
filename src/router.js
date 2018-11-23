@@ -26,15 +26,33 @@ export default new Router({
     },
     //项目
     {
-      path: "/project/apply",
+      path: "/project/add/special",
       name: "专项项目申请",
-      component: () => import("./views/project/apply/special.vue"),
+      component: () => import("./views/project/add/special.vue"),
       meta:{requireAuth:true}
     },
     {
-      path: "/project/list/examine",
+      path: "/project/list/special",
       name: "专项项目审批",
-      component: () => import("./views/project/list/examine.vue"),
+      component: () => import("./views/project/list/special.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/add/unspecial",
+      name: "非专项项目备案",
+      component: () => import("./views/project/add/unspecial.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/list/unspecial",
+      name: "非专项项目管理",
+      component: () => import("./views/project/list/unspecial.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/list/student",
+      name: "学生可申请项目",
+      component: () => import("./views/project/list/student.vue"),
       meta:{requireAuth:true}
     },
   ]
