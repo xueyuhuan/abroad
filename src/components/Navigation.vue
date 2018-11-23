@@ -11,7 +11,9 @@
           <el-menu-item index="/project/list/special"><router-link to="/project/list/special">专项项目管理</router-link></el-menu-item>
           <el-menu-item index="/project/add/unspecial"><router-link to="/project/add/unspecial">非专项项目备案</router-link></el-menu-item>
           <el-menu-item index="/project/list/unspecial"><router-link to="/project/list/unspecial">非专项项目管理</router-link></el-menu-item>
+
           <el-menu-item index="/project/list/student"><router-link to="/project/list/student">已发布项目（学生）</router-link></el-menu-item>
+          <el-menu-item index="/project/apply/list"><router-link to="/project/apply/list">我的申请记录</router-link></el-menu-item>
         </el-submenu>
         <el-submenu index="bs">
           <template slot="title">系统管理</template>
@@ -28,7 +30,7 @@
     </div>
     <el-dialog class="switch" :visible.sync="dialogVisible" width="30%">
       <header slot="title">切换角色</header>
-      <el-select v-model="newRole" placeholder="请选择" class="select">
+      <el-select v-model="newRole" placeholder="请选择">
         <el-option
                 v-for="item in roleList"
                 :key="item.id"
@@ -110,16 +112,14 @@
           padding: 0 50px;
         }
       }
-      .switch{
-        header{
-          @include flex;
-        }
-        .el-select{
-          display: block;
-          width: 70%;
-          margin: 0 auto;
-        }
+    }
+    .switch{
+      .el-select{
+        display: block;
+        width: 70%;
+        margin: 0 auto;
       }
     }
+
   }
 </style>

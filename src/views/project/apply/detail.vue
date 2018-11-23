@@ -1,7 +1,7 @@
 <template>
     <div class="project">
         <fieldset>
-            <legend>学生申请表</legend>
+            <legend>详情</legend>
         </fieldset>
         <el-card shadow="hover">
             <header slot="header">项目</header>
@@ -39,7 +39,7 @@
         </el-card>
         <el-card shadow="hover">
             <header slot="header">学生基本信息</header>
-            <el-form inline size="mini" label-width="110px" class="form-inline">
+            <el-form inline size="mini" disabled label-width="110px" class="form-inline">
                 <el-form-item label="姓名">
                     <el-input v-model="studentInfo.xm" disabled></el-input>
                 </el-form-item>
@@ -92,7 +92,7 @@
         </el-card>
         <el-card shadow="hover">
             <header slot="header">申请表</header>
-            <el-form inline size="medium" label-width="110px" class="form-inline">
+            <el-form inline size="medium" disabled label-width="110px" class="form-inline">
                 <el-form-item label="申请理由" class="block">
                     <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.sqly" placeholder="请填写项目申请理由（2000字以内）"></el-input>
                 </el-form-item>
@@ -121,12 +121,20 @@
                     </el-upload>
                 </el-form-item>
                 <el-form-item label="其他材料" class="block" >
-                    <el-upload :action="$proxy+'/upload/uploadFile'" :on-remove="handleRemove" :on-success="handleSuccess">
+                    <el-upload :action="$proxy+'/upload/uploadFile'" :on-remove="handleRemove" :on-success="handleSuccess" :file-list="qtList">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
                     </el-upload>
                 </el-form-item>
-                <el-form-item class="submit">
-                    <el-button type="primary" @click="submitForm()">确认提交</el-button>
+                <el-form-item label="审核状况" class="block step">
+                    <el-steps :active="activeStep" finish-status="success" :space="400">
+                        <el-step v-for="i in stepList" :key="i.id" :description="i.spyj">
+                            <template slot="title">
+                                <span v-if="i.status==='0'">{{i.step_name}}待审核</span>
+                                <span v-else-if="i.status==='1'">{{i.step_name}}审核通过</span>
+                                <span v-else-if="i.status==='9'">{{i.step_name}}审核不通过</span>
+                            </template>
+                        </el-step>
+                    </el-steps>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -140,6 +148,8 @@
       return {
         placeList:[],
         deptList:[],
+        activeStep:2,
+        applyProject:'',//項目
         studentInfo:'',//学生基本信息
         apply:{
           projectId:'',//项目id
@@ -158,6 +168,8 @@
           hzsy:'', //护照首页
           qtfile:'',  //其它项目申请要求材料
         },
+        qtList:[],
+        stepList:[],
         imgUrl:'/resource/showImg?path=',
         fileList:[],//upload本身上传文件
         archiveFileList:[],//附件所需结构
@@ -167,22 +179,33 @@
       role () {
         return this.$store.state.role
       },
-      applyProject(){
-        return this.$store.state.applyProject
+      applyId(){
+        return this.$store.state.applyId
       }
     },
     created(){
       this.getInfo();
-      if(!this.applyProject.id){
-        this.$router.push('/project/list/student');
+      if(this.applyId===''){
+        this.$router.push('/project/apply/list');
       }
     },
     methods: {
       //获取信息
       getInfo(){
-        this.$ajax.post('student/getInfo')
+        this.$ajax.post('projectApply/toView',{applyId:this.applyId})
           .then(res=>{
-            this.studentInfo=res.data.data.data;
+            this.applyProject={...res.data.data.data.project.sqlRow};
+            this.studentInfo={...res.data.data.data.student};
+            this.apply={...res.data.data.data.projectApply};
+            this.qtList=[...res.data.data.data.qtList];
+            this.stepList=[...res.data.data.data.processDataList];
+            // this.activeStep=res.data.data.data.xl;
+            for(let i in this.stepList){
+              if(this.stepList[i].step_status==='0'){
+                this.activeStep=i;
+                return;
+              }
+            }
           })
       },
       //附件上传
@@ -274,8 +297,11 @@
         .name{//项目名称长度
             width: 554px
         }
-        .img-upload{
-
+        .step{//审核状况即步骤条显示问题
+            .el-form-item__content{
+                line-height: normal;
+                width: 900px;
+            }
         }
     }
 </style>

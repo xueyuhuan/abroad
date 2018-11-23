@@ -61,5 +61,17 @@ export default new Router({
       component: () => import("./views/project/apply/apply.vue"),
       meta:{requireAuth:true}
     },
+    {
+      path: "/project/apply/list",
+      name: "我的申请记录",
+      component: () => import("./views/project/apply/list.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/apply/detail",
+      name: "申请表详情",
+      component: () => import("./views/project/apply/detail.vue"),
+      meta:{requireAuth:true}
+    },
   ]
 })
