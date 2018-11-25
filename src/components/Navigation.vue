@@ -7,15 +7,17 @@
               mode="horizontal">
         <el-submenu index="project">
           <template slot="title">项目管理</template>
-          <el-menu-item index="/project/add/special"><router-link to="/project/add/special">专项项目申请</router-link></el-menu-item>
-          <el-menu-item index="/project/list/special"><router-link to="/project/list/special">专项项目管理</router-link></el-menu-item>
-          <el-menu-item index="/project/add/unspecial"><router-link to="/project/add/unspecial">非专项项目备案</router-link></el-menu-item>
-          <el-menu-item index="/project/list/unspecial"><router-link to="/project/list/unspecial">非专项项目管理</router-link></el-menu-item>
+          <el-menu-item index="/project/add/special" v-if="role!=='SYS_STUDENT'"><router-link to="/project/add/special">专项项目申请</router-link></el-menu-item>
+          <el-menu-item index="/project/list/special" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/project/list/special">专项项目管理</router-link></el-menu-item>
+          <el-menu-item index="/project/add/unspecial" v-if="role==='SYS_DEPT'||role==='SYS_LXDW'"><router-link to="/project/add/unspecial">非专项项目备案</router-link></el-menu-item>
+          <el-menu-item index="/project/list/unspecial" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/project/list/unspecial">非专项项目管理</router-link></el-menu-item>
 
-          <el-menu-item index="/project/list/student"><router-link to="/project/list/student">已发布项目（学生）</router-link></el-menu-item>
-          <el-menu-item index="/project/apply/list"><router-link to="/project/apply/list">我的申请记录</router-link></el-menu-item>
+          <el-menu-item index="/project/list/student" v-if="role==='SYS_STUDENT'"><router-link to="/project/list/student">已发布项目</router-link></el-menu-item>
+          <el-menu-item index="/project/apply/list" v-if="role==='SYS_STUDENT'"><router-link to="/project/apply/list">我的申请记录</router-link></el-menu-item>
+
+          <el-menu-item index="/project/apply/examine" v-if="role!=='SYS_STUDENT'"><router-link to="/project/apply/examine">学生申请审批</router-link></el-menu-item>
         </el-submenu>
-        <el-submenu index="bs">
+        <el-submenu index="bs" v-if="role==='SYS_ADMIN'">
           <template slot="title">系统管理</template>
           <el-menu-item index="/bs/set"><router-link to="/bs/set">基础设置</router-link></el-menu-item>
           <el-menu-item index="/bs/user"><router-link to="/bs/user">用户管理</router-link></el-menu-item>
@@ -77,6 +79,7 @@
       }
     },
     created(){
+      this.newRole=this.role;
     },
     methods:{
       logout(){

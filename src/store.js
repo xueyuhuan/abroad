@@ -10,6 +10,7 @@ export default new Vuex.Store({
     roleList:'',//用户所有角色表
     applyProject:'',//当前申请项目
     applyId:'',//学生申请表id
+    applyName:'',//申请表名（详情/审批）
   },
   getters:{
     token:state=>{return state.token},

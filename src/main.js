@@ -37,18 +37,37 @@ Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+//判断是否有token
+function hasToken(){
+  if(store.getters.token){
+    return true;
+  }
+  else if(sessionStorage.getItem('token')!==null){
+    store.commit('setToken',sessionStorage['token']);
+    store.commit('setRole',sessionStorage['role']);
+    store.commit('setRoleList',JSON.parse(sessionStorage['roleList']));
+    return true
+  }
+  else return false
+}
+
 router.beforeEach((to,from,next)=>{
-  axios.post('/cas/test_login')
-    .then(res=>{
-      axios.post('/gettoken',{uuid:res.data.data.APP_UUID})
-        .then(res=>{
-          store.commit('setToken',res.data.data.token);
-          store.commit('setRole',res.data.data.currentRole.id);
-          store.commit('setRoleList',res.data.data.roles);
-          // console.log(res);
-          next()
-        })
-    })
+  if(hasToken()){
+    next();
+  }
+  else{
+    axios.post('/cas/test_login')
+      .then(res=>{
+        axios.post('/gettoken',{uuid:res.data.data.APP_UUID})
+          .then(res=>{
+            store.commit('setToken',res.data.data.token);
+            store.commit('setRole',res.data.data.currentRole.id);
+            store.commit('setRoleList',res.data.data.roles);
+            // console.log(res);
+            next()
+          })
+      })
+  }
 });
 
 new Vue({

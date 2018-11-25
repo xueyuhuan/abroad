@@ -45,6 +45,15 @@
                         <el-col :span="10"><el-input v-model="formSearch.maxDay" clearable></el-input></el-col>
                     </el-row>
                 </el-form-item>
+                <el-form-item label="是否专项">
+                    <el-select v-model="formSearch.sfzx" filterable placeholder="请选择">
+                        <el-option label="专项项目" value="101"></el-option>
+                        <el-option label="非专项项目" value="102"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="申请截止时间">
+                    <el-date-picker v-model="formSearch.sqjzsj" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getTableData">查询</el-button>
                 </el-form-item>
@@ -123,6 +132,8 @@
           xmjssj:'',
           minDay:'',
           maxDay:'',
+          sfzx:'',
+          sqjzsj:'',
           //分页
           page:1,//当前
           limit:10,

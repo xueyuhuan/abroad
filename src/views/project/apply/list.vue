@@ -104,6 +104,10 @@
           name:'applyId',
           data:row.projectApply.id,
         });
+        this.$store.commit('setData',{
+          name:'applyName',
+          data:'详情',
+        });
         this.$router.push('/project/apply/detail');
         // this.row={...row};
         // console.log(this.row);

@@ -10,7 +10,7 @@
                     <el-input v-model="applyProject.xmmc" class="name"></el-input>
                 </el-form-item>
                 <el-form-item label="出国/出境" prop="typeid">
-                    <el-select v-model="applyProject.typeid" placeholder="请选择">
+                    <el-select v-model="applyProject.typename" placeholder="请选择">
                         <el-option
                                 v-for="item in placeList"
                                 :key="item.id"
@@ -20,7 +20,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="立项单位" prop="lxdwid">
-                    <el-select v-model="applyProject.lxdwid" filterable placeholder="请选择">
+                    <el-select v-model="applyProject.lxdwmc" filterable placeholder="请选择">
                         <el-option
                                 v-for="item in deptList"
                                 :key="item.id"
@@ -125,7 +125,7 @@
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="审核状况" class="block step">
+                <el-form-item v-if="applyName==='详情'" label="审核状况" class="block step">
                     <el-steps :active="activeStep" finish-status="success" :space="400">
                         <el-step v-for="i in stepList" :key="i.id" :description="i.spyj">
                             <template slot="title">
@@ -135,6 +135,23 @@
                             </template>
                         </el-step>
                     </el-steps>
+                </el-form-item>
+            </el-form>
+        </el-card>
+        <el-card shadow="hover" v-if="applyName==='审批'">
+            <header slot="header">审批</header>
+            <el-form inline size="medium" label-width="110px" class="form-inline">
+                <el-form-item label="审批">
+                    <el-radio-group v-model="status">
+                        <el-radio-button label="1">通过</el-radio-button>
+                        <el-radio-button label="9">不通过</el-radio-button>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="审批意见">
+                    <el-input type="textarea" v-model="spyj"></el-input>
+                </el-form-item>
+                <el-form-item label=" " class="block">
+                    <el-button type="primary" @click="submitApprove()">确认提交</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -173,6 +190,9 @@
         imgUrl:'/resource/showImg?path=',
         fileList:[],//upload本身上传文件
         archiveFileList:[],//附件所需结构
+
+        status:'',
+        spyj:'',
       };
     },
     computed: {
@@ -181,12 +201,20 @@
       },
       applyId(){
         return this.$store.state.applyId
-      }
+      },
+      applyName(){
+        return this.$store.state.applyName
+      },
     },
     created(){
       this.getInfo();
       if(this.applyId===''){
-        this.$router.push('/project/apply/list');
+        if(this.role==='SYS_STUDENT'){
+          this.$router.push('/project/apply/list');
+        }
+        else{
+          this.$router.push('/project/apply/examine');
+        }
       }
     },
     methods: {
@@ -199,13 +227,13 @@
             this.apply={...res.data.data.data.projectApply};
             this.qtList=[...res.data.data.data.qtList];
             this.stepList=[...res.data.data.data.processDataList];
-            // this.activeStep=res.data.data.data.xl;
-            for(let i in this.stepList){
-              if(this.stepList[i].step_status==='0'){
-                this.activeStep=i;
-                return;
-              }
-            }
+            this.activeStep=res.data.data.data.xl;
+            // for(let i in this.stepList){
+            //   if(this.stepList[i].step_status==='0'){
+            //     this.activeStep=i;
+            //     return;
+            //   }
+            // }
           })
       },
       //附件上传
@@ -286,6 +314,17 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      //提交审批
+      submitApprove(){
+        this.$ajax.post('/projectApprove/approve',
+          {roleId:this.role,id:this.applyId,status:this.status,spyj:this.spyj})
+          .then(res=>{
+            if(res.data.errcode==='0'){
+              this.$router.push('/project/apply/examine')
+            }
+            else this.$message.error(res.data.errmsg)
+          })
       }
     }
   }

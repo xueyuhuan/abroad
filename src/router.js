@@ -68,6 +68,12 @@ export default new Router({
       meta:{requireAuth:true}
     },
     {
+      path: "/project/apply/examine",
+      name: "学生申请审批",
+      component: () => import("./views/project/apply/examine.vue"),
+      meta:{requireAuth:true}
+    },
+    {
       path: "/project/apply/detail",
       name: "申请表详情",
       component: () => import("./views/project/apply/detail.vue"),
