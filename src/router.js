@@ -5,6 +5,12 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    //首页
+    {
+      path: "/",
+      name: "home",
+      component: () => import("./views/home.vue"),
+    },
     //后台
     {
       path: "/bs/user",
@@ -65,6 +71,24 @@ export default new Router({
       path: "/project/apply/list",
       name: "我的申请记录",
       component: () => import("./views/project/apply/list.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/reg/list",
+      name: "我的登记",
+      component: () => import("./views/project/reg/list.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/reg/normal",
+      name: "正常登记表",
+      component: () => import("./views/project/reg/normal.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/project/reg/normal",
+      name: "正常登记",
+      component: () => import("./views/project/reg/list.vue"),
       meta:{requireAuth:true}
     },
     {

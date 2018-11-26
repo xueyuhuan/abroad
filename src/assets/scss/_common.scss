@@ -13,6 +13,10 @@ $form-line-full-width:900px;
   .select{width: $form-line-base-width;}
   .submit{display:block;text-align: center}//提交按钮行
 }
+a.download{
+  color:#409EFF;
+  text-decoration: underline;
+}
 //图片上传样式
 .img-upload{
   .el-upload {

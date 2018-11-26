@@ -13,7 +13,9 @@
           <el-menu-item index="/project/list/unspecial" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/project/list/unspecial">非专项项目管理</router-link></el-menu-item>
 
           <el-menu-item index="/project/list/student" v-if="role==='SYS_STUDENT'"><router-link to="/project/list/student">已发布项目</router-link></el-menu-item>
+
           <el-menu-item index="/project/apply/list" v-if="role==='SYS_STUDENT'"><router-link to="/project/apply/list">我的申请记录</router-link></el-menu-item>
+          <el-menu-item index="/project/reg/list" v-if="role==='SYS_STUDENT'"><router-link to="/project/reg/list">我的登记</router-link></el-menu-item>
 
           <el-menu-item index="/project/apply/examine" v-if="role!=='SYS_STUDENT'"><router-link to="/project/apply/examine">学生申请审批</router-link></el-menu-item>
         </el-submenu>
