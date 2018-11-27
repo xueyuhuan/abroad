@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
     <div class="content">
-      <router-link to="/" class="title"><ThemePicker></ThemePicker>&nbsp;&nbsp;学生出国（境）学习管理系统</router-link>
+      <router-link to="/" class="title"><img class="logo" src="favicon.png"/>学生出国（境）学习管理系统</router-link>
       <el-menu class="menu"
               :default-active="$route.path"
               mode="horizontal">
@@ -111,6 +111,10 @@
       @extend %width;
       .title{
         @include flex;
+        img.logo{
+          width: 30px;
+          margin-right: 10px;
+        }
       }
       .menu{
         .el-menu-item{

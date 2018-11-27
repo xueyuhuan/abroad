@@ -30,8 +30,10 @@
                 <el-table-column prop="sfhgdj" label="状态" show-overflow-tooltip align="center"></el-table-column>
                 <el-table-column label="操作" width="150px" align="center">
                     <template slot-scope="scope">
-                        <el-button @click="handleReg(scope.row)" type="primary" size="mini" plain  v-if="scope.row.sfhgdj!=='已登记'">登记</el-button>
-                        <el-button @click="handleRegAbnormal(scope.row)" type="warning" size="mini" plain  v-if="scope.row.sfhgdj!=='已登记'">异动</el-button>
+                        <span v-if="scope.row.sfhgdj==='未登记'||scope.row.sfhgdj==='延期'">
+                            <el-button @click="handleReg(scope.row)" type="primary" size="mini" plain>登记</el-button>
+                            <el-button @click="handleRegAbnormal(scope.row)" type="warning" size="mini" plain>异动</el-button>
+                        </span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -99,6 +101,7 @@
         dialogName:'',//弹框名
         disable:true,//彈出表单是否不可填
         abnormal:{
+          id:'',//return登记表id
           applyId:'',//申请登记id
           projectId:'',//项目id
           studentId:'',  //学生id
@@ -162,14 +165,6 @@
         });
         this.$router.push('/project/reg/normal');
       },
-      //异动
-      handleRegAbnormal(row){
-        this.row={...row};
-        this.dialogVisible=true;
-        this.disable=false;
-        this.dialogName='异动';
-        console.log(row);
-      },
       //删除
       handleRemove(file,fileList){
         console.log(file);
@@ -195,10 +190,24 @@
           this.$message.error(res.message);
         }
       },
+      //异动
+      handleRegAbnormal(row){
+        this.row={...row};
+        this.dialogVisible=true;
+        this.disable=false;
+        this.dialogName='异动';
+        console.log(row);
+      },
       //提交异动
       submitForm() {
         this.$ajax.post('/projectReturn/queryResult',{proResId:this.row.id})
           .then(res=>{
+            if(res.data.data.data.projectReturn.return===null){
+              this.abnormal.id='';
+            }
+            else{
+              this.abnormal.id=res.data.data.data.projectReturn.return.id;
+            }
             this.abnormal.applyId=res.data.data.data.projectResult.id;
             this.abnormal.studentId=res.data.data.data.student.id;
             this.abnormal.projectId=res.data.data.data.project.sqlRow.id;

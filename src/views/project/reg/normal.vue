@@ -184,7 +184,9 @@
         applyProject:'',//項目
         studentInfo:'',//学生基本信息
         apply:'',//申请信息
+        returnInfo:'',//回国登记信息
         reg:{
+          id:'',//return登记表id
           applyId:'',//申请登记id
           projectId:'',//项目id
           studentId:'',  //学生id
@@ -225,12 +227,6 @@
       this.getInfo();
       if(this.regId===''){
         this.$router.push('/project/reg/list');
-        // if(this.role==='SYS_STUDENT'){
-        //   this.$router.push('/project/apply/list');
-        // }
-        // else{
-        //   this.$router.push('/project/apply/examine');
-        // }
       }
     },
     methods: {
@@ -238,14 +234,17 @@
       getInfo(){
         this.$ajax.post('/projectReturn/queryResult',{proResId:this.regId})
           .then(res=>{
-            this.applyProject={...res.data.data.data.project.sqlRow};
-            this.studentInfo={...res.data.data.data.student};
-            this.apply={...res.data.data.data.projectResult};
+            this.applyProject={...res.data.data.data.project.sqlRow};//项目信息
+            this.studentInfo={...res.data.data.data.student};//学生信息
+            this.apply={...res.data.data.data.projectResult};//申请信息
             if(res.data.data.data.projectReturn.return!==null&&this.regName==='详情'){
-              this.reg={...res.data.data.data.projectReturn.return};
+              this.reg={...res.data.data.data.projectReturn.return};//回国登记信息
               this.cgzlList=[...res.data.data.data.projectReturn.cgzlList];
               this.abnormal={...res.data.data.data.projectReturn.return};
               this.ydclList=[...res.data.data.data.projectReturn.ydclList];
+            }
+            if(res.data.data.data.projectReturn.return!==null&&this.regName!=='详情'){
+              this.returnInfo={...res.data.data.data.projectReturn.return};//回国登记信息
             }
           })
       },
@@ -310,6 +309,7 @@
       },
       //提交
       submitForm() {
+        this.reg.id=this.returnInfo.id;
         this.reg.applyId=this.apply.id;
         this.reg.studentId=this.studentInfo.id;
         this.reg.projectId=this.applyProject.id;
