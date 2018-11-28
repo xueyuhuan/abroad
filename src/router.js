@@ -30,6 +30,37 @@ export default new Router({
       component: () => import("./views/backstage/set.vue"),
       meta:{requireAuth:true}
     },
+    //奖学金
+    {
+      path: "/award/add",
+      name: "奖学金新增",
+      component: () => import("./views/award/add/award.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/award/detail",
+      name: "奖学金回显",
+      component: () => import("./views/award/add/detail.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/award/list",
+      name: "奖学金列表",
+      component: () => import("./views/award/list/list.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/award/list/student",
+      name: "学生申请奖学金列表",
+      component: () => import("./views/award/list/student.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/award/apply",
+      name: "奖学金申请表",
+      component: () => import("./views/award/apply/apply.vue"),
+      meta:{requireAuth:true}
+    },
     //项目
     {
       path: "/project/add/special",

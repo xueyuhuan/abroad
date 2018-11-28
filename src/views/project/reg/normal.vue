@@ -109,7 +109,6 @@
                 </el-form-item>
                 <el-form-item label="总结" class="block">
                     <el-upload v-if="regName==='登记'"
-                            class="upload-demo"
                             :action="$proxy+'/upload/uploadFile'"
                             :limit="1" :on-success="handleSuccess0">
                         <el-button size="small" type="primary" icon="el-icon-upload">选择上传</el-button>

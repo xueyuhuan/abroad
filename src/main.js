@@ -34,9 +34,24 @@ requireComponent.keys().forEach(fileName => {
 
 Vue.prototype.$ajax=axios;
 Vue.prototype.$proxy=process.env.VUE_APP_PROXY;
+Vue.prototype.$downloadUrl='/resource/downloadFile?path=';
+Vue.prototype.$showUrl='/resource/showImg?path=';
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+//获取cookie
+function getCookie(name){
+  let arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+  if(arr=document.cookie.match(reg)){
+    store.commit('setData',{
+      name:'cookie',
+      data:decodeURIComponent(arr[2])
+    });
+    return decodeURIComponent(arr[2]);
+  }
+  else
+    return false;
+}
 //判断是否有token
 function hasToken(){
   if(store.getters.token){
@@ -67,6 +82,23 @@ router.beforeEach((to,from,next)=>{
             next()
           })
       })
+    // if(getCookie('APP_UUID')){
+    //   axios.post('/gettoken',{uuid:getCookie('APP_UUID')})
+    //     .then(res=>{
+    //       store.commit('setToken',res.data.data.token);
+    //       store.commit('setRole',res.data.data.currentRole.id);
+    //       store.commit('setRoleList',res.data.data.roles);
+    //       // console.log(res);
+    //       next()
+    //     })
+    // }
+    // else{
+    //   axios.post('/getLoginUrl')
+    //     .then(res=>{
+    //       sessionStorage.clear();
+    //       window.location.href=res.data.url;
+    //     })
+    // }
   }
 });
 

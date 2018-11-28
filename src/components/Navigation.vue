@@ -19,6 +19,12 @@
 
           <el-menu-item index="/project/apply/examine" v-if="role!=='SYS_STUDENT'"><router-link to="/project/apply/examine">学生申请审批</router-link></el-menu-item>
         </el-submenu>
+        <el-submenu index="award">
+          <template slot="title">奖学金管理</template>
+          <el-menu-item index="/award/add" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/add">批次设置</router-link></el-menu-item>
+          <el-menu-item index="/award/list" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/list">所有奖学金</router-link></el-menu-item>
+          <el-menu-item index="/award/list/student" v-if="role==='SYS_STUDENT'"><router-link to="/award/list/student">可申请奖学金</router-link></el-menu-item>
+        </el-submenu>
         <el-submenu index="bs" v-if="role==='SYS_ADMIN'">
           <template slot="title">系统管理</template>
           <el-menu-item index="/bs/set"><router-link to="/bs/set">基础设置</router-link></el-menu-item>

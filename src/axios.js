@@ -64,7 +64,9 @@ instance.interceptors.response.use(
             router.replace({
               path: '/loading',
               //query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
-            })
+            });break
+          case 400:
+            Vue.prototype.$notify.error(err.response);
         }
       }
       return Promise.reject(err)

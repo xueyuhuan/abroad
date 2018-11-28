@@ -13,6 +13,8 @@ export default new Vuex.Store({
     applyName:'',//申请表名（详情/审批）
     regId:'',//登记id
     regName:'',//登记表名（详情/登记）
+    awardData:'',//奖学金data
+    awardName:'',//奖学金表名（详情/编辑）
   },
   getters:{
     token:state=>{return state.token},
