@@ -54,7 +54,6 @@
                 </el-form-item>
                 <el-form-item class="submit" v-if="awardName==='编辑'">
                     <el-button type="primary" @click="submitForm('form')">确认提交</el-button>
-                    <el-button @click="resetForm('form')">重置内容</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -211,17 +210,19 @@
       },
     },
     created(){
-      this.form={...this.awardData};
-      console.log(this.form);
-      this.fjList=JSON.parse(this.form.fjzl);
-      this.multipleSelection=[...this.form.projectlist];
-      if(this.awardName==='编辑'){
-        //奖学金年度列表
-        this.$ajax.post('/code/xn')
-          .then(res=>{
-            this.ndList=res.data.data.data;
-          })
+      if(this.awardData.id){
+        this.form={...this.awardData};
+        this.fjList=JSON.parse(this.form.fjzl);
+        this.multipleSelection=[...this.form.projectlist];
+        if(this.awardName==='编辑'){
+          //奖学金年度列表
+          this.$ajax.post('/code/xn')
+            .then(res=>{
+              this.ndList=res.data.data.data;
+            })
+        }
       }
+      else this.$router.push('/award/list')
     },
     methods: {
       //获取下拉列表
@@ -281,12 +282,11 @@
         let path=file.url?file.url:file.response.path;
         this.$ajax.post('/resource/deleteFile',{path:path})
           .then(res=>{
-            if(res.errcode==='0'){
+            if(res.data.errcode==='0'){
               this.fileList=fileList;
-              console.log(this.fileList)
             }
             else{
-              this.$message.error(res.errmsg);
+              this.$message.error(res.data.errmsg);
             }
           });
       },

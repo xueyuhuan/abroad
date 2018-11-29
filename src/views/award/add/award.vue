@@ -281,11 +281,11 @@
         let path=file.url?file.url:file.response.path;
         this.$ajax.post('/resource/deleteFile',{path:path})
           .then(res=>{
-            if(res.errcode==='0'){
+            if(res.data.errcode==='0'){
               this.fileList=fileList;
             }
             else{
-              this.$message.error(res.errmsg);
+              this.$message.error(res.data.errmsg);
             }
           });
       },
