@@ -138,7 +138,7 @@
                         <el-table-column prop="spyj" label="不通过原因" width="80" show-overflow-tooltip align="center"></el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane label="非专项申请" name="fzxsq">
+                <el-tab-pane label="非专项申请" name="fzxsq" v-if="role==='SYS_LGB'||role==='SYS_GATB'">
                     <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
                         <el-table-column prop="std_xh" label="学号" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="std_xm" label="姓名" show-overflow-tooltip align="center"></el-table-column>
