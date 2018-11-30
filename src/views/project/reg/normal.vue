@@ -140,6 +140,7 @@
                 <el-form-item label="其他资料或成果" class="block" >
                     <el-upload :action="$proxy+'/upload/uploadFile'" :file-list="cgzlList" :on-remove="handleRemove" :on-success="handleSuccess">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过2M</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label=" " class="block" v-show="regName==='登记'">
@@ -165,6 +166,7 @@
                 <el-form-item label="相关材料">
                     <el-upload :action="$proxy+'/upload/uploadFile'" :file-list="ydclList" :on-remove="handleRemove" :on-success="handleSuccess">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过2M</div>
                     </el-upload>
                 </el-form-item>
             </el-form>
@@ -312,6 +314,7 @@
         this.reg.applyId=this.apply.id;
         this.reg.studentId=this.studentInfo.id;
         this.reg.projectId=this.applyProject.id;
+        this.archiveFileList=[];
         for(let i=0;i<this.fileList.length;i++){
           if(this.fileList[i].response){
             this.archiveFileList.push({
@@ -324,7 +327,9 @@
             name:this.fileList[i].name
           });
         }
-        this.reg.cgzl=JSON.stringify(this.archiveFileList);
+        if(this.archiveFileList.length>0){
+          this.reg.cgzl=JSON.stringify(this.archiveFileList);
+        }
         this.$ajax.post('/projectReturn/checkIn',this.reg)
           .then(res=>{
             if(res.data.errcode==='0'){

@@ -11,6 +11,13 @@ export default new Router({
       name: "home",
       component: () => import("./views/home.vue"),
     },
+    //错误
+    {
+      path: "/error",
+      name: "error",
+      component: () => import("./views/error.vue"),
+      meta:{foo:false}
+    },
     //后台
     {
       path: "/bs/user",
@@ -50,6 +57,12 @@ export default new Router({
       meta:{requireAuth:true}
     },
     {
+      path: "/award/list/examine",
+      name: "奖学金审核列表",
+      component: () => import("./views/award/list/examine.vue"),
+      meta:{requireAuth:true}
+    },
+    {
       path: "/award/list/student",
       name: "学生申请奖学金列表",
       component: () => import("./views/award/list/student.vue"),
@@ -59,6 +72,18 @@ export default new Router({
       path: "/award/apply",
       name: "奖学金申请表",
       component: () => import("./views/award/apply/apply.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/award/apply/list",
+      name: "奖学金申请名单列表",
+      component: () => import("./views/award/apply/list.vue"),
+      meta:{requireAuth:true}
+    },
+    {
+      path: "/award/apply/manange",
+      name: "奖学金申请名单管理",
+      component: () => import("./views/award/apply/manange.vue"),
       meta:{requireAuth:true}
     },
     //项目

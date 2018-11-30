@@ -154,7 +154,7 @@
                         <el-table-column prop="xmfzrdh" label="联系电话" width="80" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="mexz" label="名额" width="50" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column prop="xxjl" label="学校奖励" width="60" show-overflow-tooltip align="center"></el-table-column>
-                        <el-table-column prop="shsj" label="申请截止时间" width="80" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="xssqzzsj" label="申请截止时间" width="80" show-overflow-tooltip align="center"></el-table-column>
                         <el-table-column label="操作" width="80" align="center">
                             <template slot-scope="scope">
                                 <el-button @click="handleEdit(scope.row)" type="primary" size="mini" plain>编辑</el-button>

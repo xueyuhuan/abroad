@@ -181,6 +181,7 @@
             <el-form-item label="项目材料上传" class="block" v-if="name==='编辑'">
                 <el-upload :action="$proxy+'/upload/uploadFile'" :on-remove="handleRemove" :on-success="handleSuccess" :file-list="form.fjlist">
                     <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过2M</div>
                 </el-upload>
             </el-form-item>
             <el-form-item label="项目材料上传" class="block" v-else>
@@ -188,6 +189,9 @@
                     <el-table-column prop="name" label="文件名" width="300px"></el-table-column>
                     <el-table-column prop="url" label="文件地址"></el-table-column>
                 </el-table>
+            </el-form-item>
+            <el-form-item label="申请截止时间" class="block" v-if="name==='编辑'">
+                <el-date-picker v-model="form.xssqzzsj" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
             </el-form-item>
             <el-form-item label=" " v-if="name==='编辑'">
                 <el-button type="primary" @click="submitEdit()">确认提交</el-button>
@@ -486,7 +490,9 @@
             name:this.fileList[i].name
           });
         }
-        this.form.fj=JSON.stringify(this.archiveFileList);
+        if(this.archiveFileList.length>0){
+          this.form.fj=JSON.stringify(this.archiveFileList);
+        }
         this.$ajax.post('/project/update',this.form)
           .then(res=>{
             if(res.data.errcode==='0'){

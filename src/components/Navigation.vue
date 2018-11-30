@@ -22,8 +22,11 @@
         <el-submenu index="award">
           <template slot="title">奖学金管理</template>
           <el-menu-item index="/award/add" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/add">批次设置</router-link></el-menu-item>
-          <el-menu-item index="/award/list" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/list">所有奖学金</router-link></el-menu-item>
+          <el-menu-item index="/award/list" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/list">奖学金管理</router-link></el-menu-item>
+          <el-menu-item index="/award/list/examine" v-if="role!=='SYS_STUDENT'"><router-link to="/award/list/examine">奖学金审批</router-link></el-menu-item>
           <el-menu-item index="/award/list/student" v-if="role==='SYS_STUDENT'"><router-link to="/award/list/student">可申请奖学金</router-link></el-menu-item>
+
+          <el-menu-item index="/award/apply/manange" v-if="role!=='SYS_STUDENT'"><router-link to="/award/apply/manange">奖学金名单管理</router-link></el-menu-item>
         </el-submenu>
         <el-submenu index="bs" v-if="role==='SYS_ADMIN'">
           <template slot="title">系统管理</template>

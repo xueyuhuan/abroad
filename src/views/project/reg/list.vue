@@ -65,6 +65,7 @@
                 <el-form-item label="相关材料">
                     <el-upload :action="$proxy+'/upload/uploadFile'" :on-remove="handleRemove" :on-success="handleSuccess">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过2M</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item label=" " class="block">
@@ -212,6 +213,7 @@
             this.abnormal.studentId=res.data.data.data.student.id;
             this.abnormal.projectId=res.data.data.data.project.sqlRow.id;
             this.abnormal.status=this.abnormal.ydlx;
+            this.archiveFileList=[];
             for(let i=0;i<this.fileList.length;i++){
               if(this.fileList[i].response){
                 this.archiveFileList.push({
@@ -224,7 +226,9 @@
                 name:this.fileList[i].name
               });
             }
-            this.abnormal.ydcl=JSON.stringify(this.archiveFileList);
+            if(this.archiveFileList.length>0){
+              this.abnormal.ydcl=JSON.stringify(this.archiveFileList);
+            }
             this.$ajax.post('/projectReturn/checkIn',this.abnormal)
               .then(res=>{
                 if(res.data.errcode==='0'){

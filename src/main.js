@@ -71,7 +71,7 @@ router.beforeEach((to,from,next)=>{
     next();
   }
   else{
-    axios.post('/cas/test_login')
+    axios.post('/cas/test_login',{test:'111'})
       .then(res=>{
         axios.post('/gettoken',{uuid:res.data.data.APP_UUID})
           .then(res=>{

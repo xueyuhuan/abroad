@@ -123,6 +123,7 @@
                 <el-form-item label="其他材料" class="block" >
                     <el-upload :action="$proxy+'/upload/uploadFile'" :on-remove="handleRemove" :on-success="handleSuccess">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过2M</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item class="submit">
@@ -239,6 +240,7 @@
       //提交
       submitForm() {
         this.apply.projectId=this.applyProject.id;
+        this.archiveFileList=[];
         for(let i=0;i<this.fileList.length;i++){
           if(this.fileList[i].response){
             this.archiveFileList.push({
@@ -251,7 +253,9 @@
             name:this.fileList[i].name
           });
         }
-        this.apply.qtfile=JSON.stringify(this.archiveFileList);
+        if(this.archiveFileList.length>0){
+          this.apply.qtfile=JSON.stringify(this.archiveFileList);
+        }
         this.$ajax.post('/projectApply/add',this.apply)
           .then(res=>{
             if(res.data.errcode==='0'){

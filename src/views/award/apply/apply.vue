@@ -48,7 +48,7 @@
                     <el-input class="select" v-model="form.zxdh"></el-input>
                 </el-form-item>
                 <el-form-item label="项目材料上传" class="block">
-                    <a class="download" v-for="i in JSON.parse(form.fjzl)" :key="i.id" :href="$proxy+$downloadUrl+i.url">{{i.name}}</a>
+                    <a class="download" target="_blank" v-for="i in JSON.parse(form.fjzl)" :key="i.id" :href="$proxy+$downloadUrl+i.url">{{i.name}}</a>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -72,6 +72,9 @@
                 </el-form-item>
                 <el-form-item label="培养层次">
                     <el-input v-model="studentInfo.pycc" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="学生类别">
+                    <el-input v-model="studentInfo.xxlb" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="政治面貌">
                     <el-input v-model="studentInfo.zzmm" disabled></el-input>

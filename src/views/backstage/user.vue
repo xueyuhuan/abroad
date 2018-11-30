@@ -251,6 +251,8 @@
           this.$message.warning('请选择数据');
         }
         else{
+          console.log(this.roleIds);
+          this.roleIds=[];
           this.dialogVisibleRole=true;
         }
       },

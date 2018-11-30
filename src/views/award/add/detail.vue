@@ -50,6 +50,7 @@
                 <el-form-item label="项目材料上传" class="block">
                     <el-upload :action="$proxy+'/upload/uploadFile'" :on-remove="handleRemove" :on-success="handleSuccess" :file-list="fjList">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过2M</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item class="submit" v-if="awardName==='编辑'">
@@ -309,7 +310,7 @@
             // for(let i in this.multipleSelection){
             //   this.form.projectIds.push(this.multipleSelection[i].id)
             // }
-            console.log(this.multipleSelection)
+            this.archiveFileList=[];
             for(let i=0;i<this.fileList.length;i++){
               if(this.fileList[i].response){
                 this.archiveFileList.push({

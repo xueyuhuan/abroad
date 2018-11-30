@@ -25,13 +25,6 @@
                         <el-button type="text" @click="btnApprove(scope.row)">学生申请名单</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="240" align="center">
-                    <template slot-scope="scope">
-                        <el-button @click="handleToggle(scope.row)" type="primary" size="mini" plain>{{scope.row.status==='0'?'开放':'关闭'}}</el-button>
-                        <el-button @click="handleEdit(scope.row)" type="warning" size="mini" plain>编辑</el-button>
-                        <el-button @click="handleDel(scope.row)" type="danger" size="mini" plain>删除</el-button>
-                    </template>
-                </el-table-column>
             </el-table>
             <el-pagination class="pagination"
                            @current-change="handleCurrentChange"
