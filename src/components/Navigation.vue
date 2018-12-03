@@ -24,7 +24,7 @@
           <el-menu-item index="/award/add" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/add">批次设置</router-link></el-menu-item>
           <el-menu-item index="/award/list" v-if="role==='SYS_LGB'||role==='SYS_GATB'"><router-link to="/award/list">奖学金管理</router-link></el-menu-item>
           <el-menu-item index="/award/list/examine" v-if="role!=='SYS_STUDENT'"><router-link to="/award/list/examine">奖学金审批</router-link></el-menu-item>
-          <el-menu-item index="/award/list/student" v-if="role==='SYS_STUDENT'"><router-link to="/award/list/student">可申请奖学金</router-link></el-menu-item>
+          <el-menu-item index="/award/list/student" v-if="role==='SYS_STUDENT'"><router-link to="/award/list/student">申请奖学金</router-link></el-menu-item>
 
           <el-menu-item index="/award/apply/manange" v-if="role!=='SYS_STUDENT'"><router-link to="/award/apply/manange">奖学金名单管理</router-link></el-menu-item>
         </el-submenu>
@@ -35,7 +35,7 @@
           <el-menu-item index="/bs/role"><router-link to="/bs/role">角色管理</router-link></el-menu-item>
         </el-submenu>
         <el-submenu index="7">
-          <template slot="title">用户名</template>
+          <template slot="title">{{user.truename}}</template>
           <el-menu-item index="7-1" @click="switchRole">切换角色</el-menu-item>
           <el-menu-item index="7-1" @click="logout">注销</el-menu-item>
         </el-submenu>
@@ -73,7 +73,10 @@
       },
       roleList(){
         return this.$store.state.roleList
-      }
+      },
+      user() {//用户信息
+        return this.$store.state.user
+      },
       // student(){
       //   return this.role.includes('SYS_STUDENT')
       // },

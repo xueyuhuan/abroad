@@ -8,6 +8,7 @@ export default new Vuex.Store({
     token:'',
     role:'',//当前用户角色
     roleList:'',//用户所有角色表
+    user:'',//用户信息
     applyProject:'',//当前申请项目
     applyId:'',//学生申请表id
     applyName:'',//申请表名（详情/审批）
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     token:state=>{return state.token},
     role:state=>{return state.role},
     roleList:state=>{return state.roleList},
+    user:state=>{return state.user},
   },
   mutations: {
     //设置数据
@@ -39,7 +41,11 @@ export default new Vuex.Store({
     setRoleList(state,roleList){
       state.roleList=roleList;
       sessionStorage['roleList']=JSON.stringify(roleList);
-    }
+    },
+    setUser(state,user){
+      state.user=user;
+      sessionStorage['user']=JSON.stringify(user);
+    },
   },
   actions: {}
 });

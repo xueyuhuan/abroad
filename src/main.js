@@ -61,6 +61,7 @@ function hasToken(){
     store.commit('setToken',sessionStorage['token']);
     store.commit('setRole',sessionStorage['role']);
     store.commit('setRoleList',JSON.parse(sessionStorage['roleList']));
+    store.commit('setUser',JSON.parse(sessionStorage['user']));
     return true
   }
   else return false
@@ -71,33 +72,33 @@ router.beforeEach((to,from,next)=>{
     next();
   }
   else{
-    // axios.post('/cas/test_login')
-    //   .then(res=>{
-    //     axios.post('/gettoken',{uuid:res.data.data.APP_UUID})
-    //       .then(res=>{
-    //         store.commit('setToken',res.data.data.token);
-    //         store.commit('setRole',res.data.data.currentRole.id);
-    //         store.commit('setRoleList',res.data.data.roles);
-    //         // console.log(res);
-    //         next()
-    //       })
-    //   })
-    if(getCookie('APP_UUID')){
-      axios.post('/gettoken',{uuid:getCookie('APP_UUID')})
-        .then(res=>{
-          store.commit('setToken',res.data.data.token);
-          store.commit('setRole',res.data.data.currentRole.id);
-          store.commit('setRoleList',res.data.data.roles);
-          next()
-        })
-    }
-    else{
-      axios.post('/getLoginUrl')
-        .then(res=>{
-          sessionStorage.clear();
-          window.location.href=res.data.url;
-        })
-    }
+    axios.post('/cas/test_login')
+      .then(res=>{
+        axios.post('/gettoken',{uuid:res.data.data.APP_UUID})
+          .then(res=>{
+            store.commit('setToken',res.data.data.token);
+            store.commit('setRole',res.data.data.currentRole.id);
+            store.commit('setRoleList',res.data.data.roles);
+            store.commit('setUser',res.data.data.user);
+            next()
+          })
+      })
+    // if(getCookie('APP_UUID')){
+    //   axios.post('/gettoken',{uuid:getCookie('APP_UUID')})
+    //     .then(res=>{
+    //       store.commit('setToken',res.data.data.token);
+    //       store.commit('setRole',res.data.data.currentRole.id);
+    //       store.commit('setRoleList',res.data.data.roles);
+    //       next()
+    //     })
+    // }
+    // else{
+    //   axios.post('/getLoginUrl')
+    //     .then(res=>{
+    //       sessionStorage.clear();
+    //       window.location.href=res.data.url;
+    //     })
+    // }
   }
 });
 
