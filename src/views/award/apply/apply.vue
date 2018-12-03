@@ -48,7 +48,7 @@
                     <el-input class="select" v-model="form.zxdh"></el-input>
                 </el-form-item>
                 <el-form-item label="项目材料上传" class="block">
-                    <a class="download" target="_blank" v-for="i in JSON.parse(form.fjzl)" :key="i.id" :href="$proxy+$downloadUrl+i.url">{{i.name}}</a>
+                    <a class="download" v-for="i in JSON.parse(form.fjzl)" :key="i.id" :href="$proxy+$downloadUrl+i.url">{{i.name}}</a>
                 </el-form-item>
             </el-form>
         </el-card>

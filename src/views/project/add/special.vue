@@ -380,7 +380,12 @@
               .then(res=>{
                 if(res.data.errcode==='0'){
                   this.$message.success('申请已提交');
-                  this.$router.push('/project/list/special');
+                  if(this.role==='SYS_DEPT'||this.role==='SYS_LXDW'){
+                    this.$router.push('/project/list/my')
+                  }
+                  else{
+                    this.$router.push('/project/list/special');
+                  }
                 }
               })
           } else {

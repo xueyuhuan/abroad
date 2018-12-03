@@ -112,6 +112,12 @@ export default new Router({
       meta:{requireAuth:true}
     },
     {
+      path: "/project/list/my",
+      name: "学院/立项单位的项目列表",
+      component: () => import("./views/project/list/my.vue"),
+      meta:{requireAuth:true}
+    },
+    {
       path: "/project/list/student",
       name: "学生可申请项目",
       component: () => import("./views/project/list/student.vue"),
