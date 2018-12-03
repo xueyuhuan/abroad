@@ -360,7 +360,7 @@
             margin-bottom: 5px;
         }
         .complex{//复杂组合按钮
-            width: 300px;
+            width: 280px;
             margin-right: 10px;
             .el-select{
                 width: 90px;

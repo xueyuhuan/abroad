@@ -4,29 +4,52 @@
             <legend>奖学金列表</legend>
         </fieldset>
         <el-card shadow="hover">
-            <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
-                <el-table-column prop="name" label="奖学金名称" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column prop="nd" label="奖学金年度" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column prop="pc" label="奖学金批次" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column prop="sqzg" label="资格要求" show-overflow-tooltip align="center"></el-table-column>
-                <el-table-column label="申请起止时间" show-overflow-tooltip align="center">
-                    <template slot-scope="scope">
-                        {{scope.row.sqkssj}}至{{scope.row.sqjzsj}}
-                    </template>
-                </el-table-column>
-                <el-table-column label="开放状态" width="100" show-overflow-tooltip align="center">
-                    <template slot-scope="scope">
-                        <el-tag v-if="scope.row.status==='0'">未开放</el-tag>
-                        <el-tag v-if="scope.row.status==='1'" type="success">已开放</el-tag>
-                        <el-tag v-if="scope.row.status==='2'" type="info">已结束</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="80" align="center">
-                    <template slot-scope="scope">
-                        <el-button @click="handleApply(scope.row)" type="primary" size="mini" plain>申请</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
+            <el-tabs v-model="formSearch.status" @tab-click="getTableData">
+                <el-tab-pane label="可申请" name="0">
+                    <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
+                        <el-table-column prop="name" label="奖学金名称" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="nd" label="奖学金年度" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="pc" label="奖学金批次" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="sqzg" label="资格要求" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column label="申请起止时间" show-overflow-tooltip align="center">
+                            <template slot-scope="scope">
+                                {{scope.row.sqkssj}}至{{scope.row.sqjzsj}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="开放状态" width="100" show-overflow-tooltip align="center">
+                            <template slot-scope="scope">
+                                <el-tag v-if="scope.row.status==='0'">未开放</el-tag>
+                                <el-tag v-if="scope.row.status==='1'" type="success">已开放</el-tag>
+                                <el-tag v-if="scope.row.status==='2'" type="info">已结束</el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作" width="80" align="center">
+                            <template slot-scope="scope">
+                                <el-button @click="handleApply(scope.row)" type="primary" size="mini" plain>申请</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+                <el-tab-pane label="已申请" name="1">
+                    <el-table :data="tableData" size="medium" border @row-dblclick="rowDblclick">
+                        <el-table-column prop="name" label="奖学金名称" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="nd" label="奖学金年度" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="pc" label="奖学金批次" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column prop="sqzg" label="资格要求" show-overflow-tooltip align="center"></el-table-column>
+                        <el-table-column label="申请起止时间" show-overflow-tooltip align="center">
+                            <template slot-scope="scope">
+                                {{scope.row.sqkssj}}至{{scope.row.sqjzsj}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="开放状态" width="100" show-overflow-tooltip align="center">
+                            <template slot-scope="scope">
+                                <el-tag v-if="scope.row.sfsq==='1'">已申请</el-tag>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-tab-pane>
+            </el-tabs>
+
             <el-pagination class="pagination"
                            @current-change="handleCurrentChange"
                            :current-page="formSearch.page"
@@ -54,6 +77,7 @@
           children:'sonList',
         },
         formSearch: {
+          status:'0',
           //分页
           page:1,//当前
           limit:10,

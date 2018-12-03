@@ -89,18 +89,18 @@
                 </el-form-item>
 
                 <el-form-item label="经费组成" class="block">
-                    <el-input class="complex" placeholder="请输入金额" v-model.number="form.dwzz">
+                    <el-input class="complex" placeholder="金额" v-model.number="form.dwzz">
                         <template slot="prepend">单位资助</template>
                         <el-select v-model="form.dwzzlx" slot="append" placeholder="请选择">
                             <el-option label="元" value="1"></el-option>
                             <el-option label="元/人" value="2"></el-option>
                         </el-select>
                     </el-input>
-                    <el-input class="complex" placeholder="请输入金额" v-model.number="form.xxjl">
+                    <el-input class="complex" placeholder="金额" v-model.number="form.xxjl">
                         <template slot="prepend">学校奖励</template>
                         <template slot="append">元/人</template>
                     </el-input>
-                    <el-input class="complex" placeholder="请输入金额" v-model.number="form.xszc">
+                    <el-input class="complex" placeholder="金额" v-model.number="form.xszc">
                         <template slot="prepend">学生自筹</template>
                         <el-select v-model="form.xszclx" slot="append" placeholder="请选择">
                             <el-option label="元" value="1"></el-option>
@@ -410,7 +410,7 @@
             margin-bottom: 5px;
         }
         .complex{//复杂组合按钮
-            width: 300px;
+            width: 280px;
             margin-right: 10px;
             .el-select{
                 width: 90px;

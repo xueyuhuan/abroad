@@ -101,7 +101,7 @@
                             <el-option label="元/人" value="2"></el-option>
                         </el-select>
                     </el-input>
-                    <el-input class="complex" placeholder="请输入金额" v-model.number="form.xszc">
+                    <el-input class="complex" placeholder="金额" v-model.number="form.xszc">
                         <template slot="prepend">学生自筹</template>
                         <template slot="append">元/人</template>
                     </el-input>
@@ -418,7 +418,7 @@
             margin-bottom: 5px;
         }
         .complex{//复杂组合按钮
-            width: 300px;
+            width: 280px;
             margin-right: 10px;
             .el-select{
                 width: 90px;

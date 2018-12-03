@@ -355,6 +355,7 @@
       //获取表格数据
       getTableData(){
         this.formSearch.roleId=this.role;
+        this.formSearch.pcId=this.form.id;
         this.$ajax.post('/jxjApprove/page',this.formSearch)
           .then(res=>{
             if(res.data.errcode==='0'){
