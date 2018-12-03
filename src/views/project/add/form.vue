@@ -186,9 +186,9 @@
             </el-form-item>
             <el-form-item label="项目材料上传" class="block" v-else>
                 <el-table :data="form.fjlist" border class="detailTable">
-                    <el-table-column prop="name" label="文件名" width="300px"></el-table-column>
+                    <el-table-column prop="name" label="文件名" width="600px"></el-table-column>
                     <el-table-column prop="url" label="文件地址">
-                        <template slot-scope="scope"><a :href="scope.row.url"></a></template>
+                        <template slot-scope="scope"><a :href="$proxy+$downloadUrl+scope.row.url" class="el-icon-download">下载</a></template>
                     </el-table-column>
                 </el-table>
             </el-form-item>
