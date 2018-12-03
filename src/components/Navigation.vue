@@ -101,7 +101,7 @@
           .then(res=>{
             this.delCookie('APP_UUID');
             sessionStorage.clear();
-            window.location.href=res.data.url;
+            window.location.href=res.data.data.url;
           })
       },
       switchRole(){
