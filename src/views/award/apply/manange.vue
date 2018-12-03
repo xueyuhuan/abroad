@@ -469,6 +469,7 @@
           }).then(({ value }) => {
             this.$ajax.post('/jxjResult/setFfje',{id:this.multipleSelection.map(select=>select.id),ffje:value})
               .then(res=>{
+                this.handleCurrentChange(1);
                 this.$message.success(res.data.errmsg)
               })
           }).catch(() => {});
@@ -485,6 +486,7 @@
           }).then(({ value }) => {
             this.$ajax.post('/jxjResult/setYfje',{id:this.multipleSelection.map(select=>select.id),yfje:value})
               .then(res=>{
+                this.handleCurrentChange(1);
                 this.$message.success(res.data.errmsg)
               })
           }).catch(() => {});
@@ -495,6 +497,7 @@
         if(this.multipleSelection.length>0){
           this.$ajax.post('/jxjResult/setStatus',{id:this.multipleSelection.map(select=>select.id)})
             .then(res=>{
+              this.handleCurrentChange(1);
               this.$message.success(res.data.errmsg)
             })
         }
