@@ -40,7 +40,7 @@
             </div>
             <el-table :data="tableData" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column prop="username" label="用户名" min-width="180"></el-table-column>
+                <el-table-column prop="username" label="用户名" min-width="150"></el-table-column>
                 <el-table-column prop="truename" label="姓名" min-width="150"></el-table-column>
                 <el-table-column prop="usertype" label="类型" min-width="150">
                     <template slot-scope="scope">
@@ -48,6 +48,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="sex" label="性别" min-width="80"></el-table-column>
+                <el-table-column prop="roleStr" label="当前用户角色" min-width="200"></el-table-column>
             </el-table>
             <el-pagination class="pagination"
                            @current-change="handleCurrentChange"
