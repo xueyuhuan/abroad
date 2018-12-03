@@ -93,9 +93,13 @@
       this.newRole=this.role;
     },
     methods:{
+      delCookie(name) {
+        document.cookie = name + '=;  expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+      },
       logout(){
         this.$ajax.post('/logoutApi')
           .then(res=>{
+            this.delCookie('APP_UUID');
             sessionStorage.clear();
             window.location.href=res.data.url;
           })
