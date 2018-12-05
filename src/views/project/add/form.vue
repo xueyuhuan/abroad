@@ -74,7 +74,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="院校或教育机构" prop="jyjg">
+            <el-form-item label="院校/教育机构" prop="jyjg">
                 <el-input class="select" v-model="form.jyjg"></el-input>
             </el-form-item>
             <el-form-item label="项目活动时间" class="block" prop="daterange">
@@ -212,7 +212,7 @@
             <el-form-item label="学校奖励" v-show="approve.type==='2'">
                 <el-input-number v-model="approve.money" :step="500" controls-position="right"></el-input-number>
             </el-form-item>
-            <el-form-item label="审批意见" v-show="approve.type==='9'">
+            <el-form-item label="审批意见" v-show="approve.type==='9'" class="block">
                 <el-input type="textarea" v-model="approve.text"></el-input>
             </el-form-item>
             <el-form-item label=" " class="block">
@@ -363,6 +363,7 @@
       this.getList();
       this.form={...this.row}
       console.log(this.form)
+      this.approve.money=this.form.xxjl;
       this.daterange=[new Date(this.row.xmkssj),new Date(this.row.xmzzsj)]
     },
     methods: {

@@ -194,7 +194,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="院校或教育机构" prop="jyjg">
+                    <el-form-item label="院校/教育机构" prop="jyjg">
                         <el-input class="select" v-model="apply.jyjg"></el-input>
                     </el-form-item>
                     <el-form-item label="留学方式">
@@ -294,7 +294,7 @@
           email:'', //电子邮箱
           jkzk:'', //健康状况
           gjdq:'',//'国家（地区）'
-          jyjg:'',//'院校或教育机构'
+          jyjg:'',//'院校/教育机构'
           lxfs:'',//'留学方式：学校选派/学院选派/自主出国'
           xxjlqk:'',//'学习交流情况：介绍申请人在海外学习交流的主要内容和活动（不超过300字）'
           kczm:'',//'获得的课程证明（上传照片）'

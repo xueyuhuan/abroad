@@ -89,6 +89,7 @@ router.beforeEach((to,from,next)=>{
     //       store.commit('setToken',res.data.data.token);
     //       store.commit('setRole',res.data.data.currentRole.id);
     //       store.commit('setRoleList',res.data.data.roles);
+    //       store.commit('setUser',res.data.data.user);
     //       next()
     //     })
     // }

@@ -9,7 +9,7 @@
                 <el-form-item label="项目名称" class="block" prop="xmmc">
                     <el-input v-model="form.xmmc" class="name"></el-input>
                 </el-form-item>
-                <el-form-item label="出国/出境" class="block" prop="typeid">
+                <el-form-item label="出国（境）" class="block" prop="typeid">
                     <el-select v-model="form.typeid" placeholder="请选择">
                         <el-option
                                 v-for="item in placeList"
@@ -64,7 +64,7 @@
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item label="国家（地区）" prop="jhgj">
-                    <el-select v-model="form.jhgj" filterable placeholder="选择交换/交流国家（地区）">
+                    <el-select v-model="form.jhgj" multiple filterable placeholder="选择交换/交流国家（地区）">
                         <el-option
                                 v-for="item in countryList"
                                 :key="item.id"
@@ -73,7 +73,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="院校或教育机构" prop="jyjg">
+                <el-form-item label="院校/教育机构" prop="jyjg">
                     <el-input class="select" v-model="form.jyjg"></el-input>
                 </el-form-item>
                 <el-form-item label="项目活动时间" class="block" prop="daterange">
@@ -141,12 +141,12 @@
                                 <el-button plain
                                         size="mini"
                                         type="primary"
-                                        @click="addDetail">新增</el-button>
+                                        @click="addDetail(scope.row)">新增</el-button>
                             </template>
                             <template slot-scope="scope">
                                 <el-button
                                         size="mini"
-                                        type="text"
+                                        type="danger"
                                         @click="handleDelete(scope.$index, tableData)">删除</el-button>
                             </template>
                         </el-table-column>
@@ -260,7 +260,10 @@
             { required: true, message: '请至少选择一项层次', trigger: 'change' }
           ],
           jhgj:[
-            { required: true, message: '请选择交换/交流国家（地区）', trigger: 'change' },
+            { required: true, message: '可多选', trigger: 'change' },
+          ],
+          jyjg:[
+            { required: true, message: '请输入', trigger: 'blur'}
           ],
           daterange: [
             { required: true, message: '请选择项目活动时间', trigger: 'change' }
@@ -327,7 +330,13 @@
       },
       //删除明细表
       handleDelete(index, rows){
-        rows.splice(index, 1);
+        this.$confirm('是否删除该项?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          rows.splice(index, 1);
+        }).catch(() => {});
       },
       //附件上传
       //删除

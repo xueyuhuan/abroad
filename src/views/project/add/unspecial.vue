@@ -73,7 +73,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="院校或教育机构" prop="jyjg">
+                <el-form-item label="院校/教育机构" prop="jyjg">
                     <el-input class="select" v-model="form.jyjg"></el-input>
                 </el-form-item>
                 <el-form-item label="项目活动时间" class="block" prop="daterange">
@@ -267,7 +267,10 @@
             { required: true, message: '请至少选择一项层次', trigger: 'change' }
           ],
           jhgj:[
-            { required: true, message: '请选择交换/交流国家（地区）', trigger: 'change' },
+            { required: true, message: '可多选', trigger: 'change' },
+          ],
+          jyjg:[
+            { required: true, message: '请输入', trigger: 'blur'}
           ],
           daterange: [
             { required: true, message: '请选择项目活动时间', trigger: 'change' }

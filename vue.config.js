@@ -12,7 +12,7 @@ module.exports = {
     }
   },
   devServer:{
-    port:80,
+    port:88,
     disableHostCheck: true,
     proxy:{
       '/proxy':{
