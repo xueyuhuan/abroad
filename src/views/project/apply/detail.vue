@@ -101,21 +101,21 @@
                 <el-form-item label="计划安排" class="block">
                     <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.jhap" placeholder="请填写出国（境）学习/会议/比赛等的内容/计划/安排"></el-input>
                 </el-form-item>
-                <el-form-item label="成绩单" class="block">
+                <el-form-item label="成绩单">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess1">
                         <img v-if="apply.cjd" :src="$proxy+imgUrl+apply.cjd" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="外语成绩证明" class="block">
+                <el-form-item label="外语成绩证明">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess2">
                         <img v-if="apply.wycjzm" :src="$proxy+imgUrl+apply.wycjzm" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="护照首页" class="block">
+                <el-form-item label="护照首页">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess3">
                         <img v-if="apply.hzsy" :src="$proxy+imgUrl+apply.hzsy" class="img">
@@ -125,7 +125,7 @@
                 <el-form-item label="其他材料" class="block" >
                     <a class="download" v-for="i in qtList" :key="i.id" :href="$proxy+$downloadUrl+i.url">{{i.name}}</a>
                 </el-form-item>
-                <el-form-item v-if="applyName==='详情'" label="审核状况" class="block step">
+                <el-form-item v-if="applyName==='详情'||applyName==='审批'" label="审核状况" class="block step">
                     <el-steps :active="activeStep" finish-status="success" :space="400">
                         <el-step v-for="i in stepList" :key="i.id" :description="i.spyj">
                             <template slot="title">

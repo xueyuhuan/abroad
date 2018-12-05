@@ -31,9 +31,8 @@
                 <el-form-item label="申请结束时间" prop="sqjzsj">
                     <el-date-picker class="select" v-model="form.sqjzsj" type="date" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="关联项目名称">
+                <el-form-item label="关联项目名称" class="block">
                     <el-tag v-for="i in form.projectlist" :key="i.id" type="success" style="margin-right: 10px">{{i.xmmc}}</el-tag>
-
                 </el-form-item>
                 <el-form-item label="申请对象" class="block">
                     <el-input type="textarea" :autosize="{ minRows: 2}" v-model="form.sqdx" placeholder="请填写申请对象"></el-input>
@@ -140,35 +139,35 @@
                 <el-form-item label="学习交流情况" class="block">
                     <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.xxjlqk" placeholder="请填写在海外学习交流的主要内容和活动（300字以内）"></el-input>
                 </el-form-item>
-                <el-form-item label="获得的课程证明" class="block">
+                <el-form-item label="获得的课程证明">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess1">
                         <img v-if="apply.kczm" :src="$proxy+imgUrl+apply.kczm" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="学分证明" class="block">
+                <el-form-item label="学分证明">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess2">
                         <img v-if="apply.xfzm" :src="$proxy+imgUrl+apply.xfzm" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="证书" class="block">
+                <el-form-item label="证书">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess3">
                         <img v-if="apply.zs" :src="$proxy+imgUrl+apply.zs" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="评语" class="block">
+                <el-form-item label="评语">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess4">
                         <img v-if="apply.py" :src="$proxy+imgUrl+apply.py" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="成绩单" class="block">
+                <el-form-item label="成绩单">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess5">
                         <img v-if="apply.cjd" :src="$proxy+imgUrl+apply.cjd" class="img">
@@ -177,8 +176,8 @@
                 </el-form-item>
                 <el-form-item label="交流报告总结" class="block">
                     <el-upload :action="$proxy+'/upload/uploadFile'"
-                               :limit="1" :on-success="handleSuccess0">
-                        <el-button size="small" type="primary" icon="el-icon-upload">《华中师范大学学生海外学习交流总结报告》</el-button>
+                               :limit="1" :on-success="handleSuccess0" :file-list="zjList">
+                        <el-button size="small" type="primary" icon="el-icon-upload">选择上传</el-button>
                         <div slot="tip" class="el-upload__tip">※ 学生自主完成，必交材料</div>
                     </el-upload>
                 </el-form-item>
@@ -241,6 +240,8 @@
         imgUrl:'/resource/showImg?path=',
         fileList:[],//upload本身上传文件
         archiveFileList:[],//附件所需结构
+
+        zjList:[],//获取的登记总结
       };
     },
     computed: {
@@ -293,6 +294,14 @@
             this.awardProjectSelect=this.awardProject[i];
           }
         }
+        this.$ajax.post('/projectReturn/getJlbg',{id:val})
+          .then(res=>{
+            if(res.data.errcode==='0'){
+              this.zjList=[{name: '登记总结', url: res.data.data.data.hgzj}];
+              this.apply.xxjlzj=res.data.data.data.hgzj;
+            }
+            else this.$message.error(res.data.errmsg);
+          })
       },
       //附件上传
       //图片

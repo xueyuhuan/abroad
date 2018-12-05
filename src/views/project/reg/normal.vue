@@ -116,23 +116,23 @@
                         <el-button size="small" type="primary" icon="el-icon-upload">选择上传</el-button>
                         <div slot="tip" class="el-upload__tip">期间的学习经历、参加的学术交流活动/会议、比赛等的总结，字数不少于1500字</div>
                     </el-upload>
-                    <a class="download" v-if="regName==='详情'&&reg.hgzj!==null" :href="$proxy+reg.hgzj">回国（入境）总结</a>
+                    <a class="download" v-if="regName==='详情'&&reg.hgzj!==null" :href="$proxy+$downloadUrl+reg.hgzj">回国（入境）总结</a>
                 </el-form-item>
-                <el-form-item label="签证页" class="block">
+                <el-form-item label="签证页">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess1">
                         <img v-if="reg.qzy" :src="$proxy+imgUrl+reg.qzy" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="出境页" class="block">
+                <el-form-item label="出境页">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess2">
                         <img v-if="reg.cjy" :src="$proxy+imgUrl+reg.cjy" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="入境页" class="block">
+                <el-form-item label="入境页">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess3">
                         <img v-if="reg.rjy" :src="$proxy+imgUrl+reg.rjy" class="img">
