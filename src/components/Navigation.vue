@@ -78,15 +78,6 @@
       user() {//用户信息
         return this.$store.state.user
       },
-      // student(){
-      //   return this.role.includes('SYS_STUDENT')
-      // },
-      // teacher(){
-      //   return this.role.includes('SYS_BZR')
-      // },
-      // admin(){
-      //   return this.role.includes('SYS_ADMIN')
-      // },
     },
     watch:{
       role(val){
@@ -113,7 +104,8 @@
       },
       submitRole(){
         this.$store.commit('setRole',this.newRole);
-        this.dialogVisible=false
+        this.dialogVisible=false;
+        this.$router.push('/');
       }
     }
   };
