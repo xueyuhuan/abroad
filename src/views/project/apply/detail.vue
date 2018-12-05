@@ -68,6 +68,8 @@
                     <el-select v-model="apply.zjlx" placeholder="请选择">
                         <el-option label="护照" value="护照"></el-option>
                         <el-option label="身份证" value="身份证"></el-option>
+                        <el-option label="台胞证" value="台胞证"></el-option>
+                        <el-option label="回乡证" value="回乡证"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="证件号码">
