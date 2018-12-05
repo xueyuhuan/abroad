@@ -26,3 +26,20 @@ a{
 em,i{
   font-style: normal;
 }
+/*
+*ele重置样式表*
+*/
+//回显(disabled)文字颜色
+$view-color:#646464;
+.el-input.is-disabled .el-input__inner{//输入框
+  color: $view-color;
+}
+.el-cascader.is-disabled .el-cascader__label{//级联选择框
+  color: $view-color;
+}
+.el-range-editor.is-disabled input{//时间范围选择框
+  color: $view-color;
+}
+.el-textarea.is-disabled .el-textarea__inner{//文本域
+  color: $view-color;
+}
