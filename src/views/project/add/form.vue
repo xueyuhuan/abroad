@@ -192,6 +192,9 @@
                     </el-table-column>
                 </el-table>
             </el-form-item>
+            <el-form-item label="审批记录" class="block" v-if="form.status!=='1'">
+                <el-tag type="success" size="mini">{{form.shrxm}}</el-tag> 在 <el-tag type="success" size="mini">{{form.shsj}}</el-tag> 审核通过
+            </el-form-item>
             <el-form-item label="申请截止时间" class="block" v-if="name==='编辑'&&form.status==='8'">
                 <el-date-picker v-model="form.xssqzzsj" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
             </el-form-item>
@@ -220,8 +223,8 @@
             </el-form-item>
         </el-form>
         <el-form v-if="name==='发布'" inline size="medium" label-width="110px" class="form-inline dialog-form">
-            <el-form-item label="申请截止时间">
-                <el-date-picker v-model="release.time" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+            <el-form-item label="申请截止时间" class="block">
+                <el-date-picker v-model="release.time" type="date" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>（截止至23：59：59）
             </el-form-item>
             <el-form-item label=" " class="block">
                 <el-button type="primary" @click="submitRelease()">确认提交</el-button>
