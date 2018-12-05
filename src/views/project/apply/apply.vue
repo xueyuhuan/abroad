@@ -99,23 +99,23 @@
                     <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.sqly" placeholder="请填写项目申请理由（2000字以内）"></el-input>
                 </el-form-item>
                 <el-form-item label="计划安排" class="block">
-                    <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.jhap" placeholder="请填写出国（境）学习/会议/比赛等的内容/计划/安排"></el-input>
+                    <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.jhap" placeholder="如果是长期学习交流，需要填写详细学习计划（学习/会议/比赛等的内容/计划/安排）"></el-input>
                 </el-form-item>
-                <el-form-item label="成绩单" class="block">
+                <el-form-item label="成绩单">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess1">
                         <img v-if="apply.cjd" :src="$proxy+imgUrl+apply.cjd" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="外语成绩证明" class="block">
+                <el-form-item label="外语成绩证明">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess2">
                         <img v-if="apply.wycjzm" :src="$proxy+imgUrl+apply.wycjzm" class="img">
                         <i v-else class="el-icon-plus icon"></i>
                     </el-upload>
                 </el-form-item>
-                <el-form-item label="护照首页" class="block">
+                <el-form-item label="护照首页">
                     <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false"
                                :on-success="handleSuccess3">
                         <img v-if="apply.hzsy" :src="$proxy+imgUrl+apply.hzsy" class="img">

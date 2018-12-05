@@ -99,7 +99,7 @@
                     <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.sqly" placeholder="请填写项目申请理由（2000字以内）"></el-input>
                 </el-form-item>
                 <el-form-item label="计划安排" class="block">
-                    <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.jhap" placeholder="请填写出国（境）学习/会议/比赛等的内容/计划/安排"></el-input>
+                    <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.jhap" placeholder="如果是长期学习交流，需要填写详细学习计划（学习/会议/比赛等的内容/计划/安排）"></el-input>
                 </el-form-item>
             </el-form>
         </el-card>

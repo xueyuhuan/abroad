@@ -210,31 +210,31 @@
                     <el-form-item label="学习交流情况" class="block">
                         <el-input type="textarea" :autosize="{ minRows: 4}" v-model="apply.xxjlqk" placeholder="请填写在海外学习交流的主要内容和活动（300字以内）"></el-input>
                     </el-form-item>
-                    <el-form-item label="获得的课程证明" class="block">
+                    <el-form-item label="获得的课程证明">
                         <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false">
                             <img v-if="apply.kczm" :src="$proxy+imgUrl+apply.kczm" class="img">
                             <i v-else class="el-icon-plus icon"></i>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="学分证明" class="block">
+                    <el-form-item label="学分证明">
                         <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false">
                             <img v-if="apply.xfzm" :src="$proxy+imgUrl+apply.xfzm" class="img">
                             <i v-else class="el-icon-plus icon"></i>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="证书" class="block">
+                    <el-form-item label="证书">
                         <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false">
                             <img v-if="apply.zs" :src="$proxy+imgUrl+apply.zs" class="img">
                             <i v-else class="el-icon-plus icon"></i>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="评语" class="block">
+                    <el-form-item label="评语">
                         <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false">
                             <img v-if="apply.py" :src="$proxy+imgUrl+apply.py" class="img">
                             <i v-else class="el-icon-plus icon"></i>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="成绩单" class="block">
+                    <el-form-item label="成绩单">
                         <el-upload class="img-upload" :action="$proxy+'/upload/uploadFile'" :show-file-list="false">
                             <img v-if="apply.cjd" :src="$proxy+imgUrl+apply.cjd" class="img">
                             <i v-else class="el-icon-plus icon"></i>

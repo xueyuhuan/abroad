@@ -46,13 +46,16 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     res => {
       loading.close();
-      if(res.data.errcode){//非正常
+      if(res.data.errcode!=='0'){//非正常
         switch (res.data.errcode) {
           case '500':Vue.prototype.$message.error(res.data.errmsg);break;
-          case '-1':router.push('/error')
+          case '-1':router.push('/error');break;
+          default :Vue.prototype.$message.error(res.data.errmsg);
         }
       }
-      return res;
+      else{
+        return res;
+      }
     },
     err => {
       loading.close();
