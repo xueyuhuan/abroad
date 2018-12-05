@@ -65,7 +65,7 @@
                 </el-checkbox-group>
             </el-form-item>
             <el-form-item label="国家（地区）" prop="jhgj">
-                <el-select v-model="form.jhgj" filterable placeholder="选择交换/交流国家（地区）">
+                <el-select v-model="form.jhgj" multiple filterable placeholder="选择交换/交流国家（地区）">
                     <el-option
                             v-for="item in countryList"
                             :key="item.id"
