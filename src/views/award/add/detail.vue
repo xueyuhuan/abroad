@@ -213,7 +213,9 @@
     created(){
       if(this.awardData.id){
         this.form={...this.awardData};
-        this.fjList=JSON.parse(this.form.fjzl);
+        if(this.form.fjzl){
+          this.fjList=JSON.parse(this.form.fjzl);
+        }
         this.multipleSelection=[...this.form.projectlist];
         if(this.awardName==='编辑'){
           //奖学金年度列表
@@ -305,7 +307,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
 
-            this.form.projectIds=this.multipleSelection.map(select=>select.id);
+            // this.form.projectIds=this.multipleSelection.map(select=>select.id);
             console.log(this.form.projectIds)
             // for(let i in this.multipleSelection){
             //   this.form.projectIds.push(this.multipleSelection[i].id)
