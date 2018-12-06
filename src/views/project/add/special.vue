@@ -10,7 +10,7 @@
                     <el-input v-model="form.xmmc" class="name"></el-input>
                 </el-form-item>
                 <el-form-item label="出国（境）" class="block" prop="typeid">
-                    <el-select v-model="form.typeid" placeholder="请选择">
+                    <el-select v-model="form.typeid" placeholder="请选择" @change="changeType">
                         <el-option
                                 v-for="item in placeList"
                                 :key="item.id"
@@ -293,6 +293,13 @@
       this.getList();
     },
     methods: {
+      changeType(val){
+        //项目类别列表
+        this.$ajax.post('/code/findCodeAndSonCode',{id:this.form.sfzx,typeid:val})
+          .then(res=>{
+            this.typeList=res.data.data.data;
+          });
+      },
       //获取下拉列表
       getList(){
         //出国出境
@@ -311,7 +318,7 @@
             this.fundsList=res.data.data.data;
           });
         //项目类别列表
-        this.$ajax.post('/code/findCodeAndSonCode',{id:this.form.sfzx})
+        this.$ajax.post('/code/findCodeAndSonCode',{id:this.form.sfzx,typeid:this.form.typeid})
           .then(res=>{
             this.typeList=res.data.data.data;
           });
