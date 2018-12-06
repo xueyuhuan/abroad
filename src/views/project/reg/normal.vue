@@ -70,6 +70,7 @@
                         <el-option label="身份证" value="身份证"></el-option>
                         <el-option label="台胞证" value="台胞证"></el-option>
                         <el-option label="回乡证" value="回乡证"></el-option>
+                        <el-option label="港澳台居民居住证" value="港澳台居民居住证"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="证件号码">
